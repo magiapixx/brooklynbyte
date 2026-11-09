@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran seo-content. Metadata, Open Graph, JSON-LD, sitemap/robots, dan draf copywriting."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `seo-content`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/seo-content.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

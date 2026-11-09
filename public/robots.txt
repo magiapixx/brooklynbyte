@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://brooklynbyte.studio/sitemap-index.xml

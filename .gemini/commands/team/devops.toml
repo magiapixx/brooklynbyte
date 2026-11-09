@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran devops. Scaffold proyek, CI/CD GitHub Actions, dan deploy staging. Tidak pernah deploy production."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `devops`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/devops.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

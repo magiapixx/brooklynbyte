@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHead from '../ui/SectionHead.astro';
+import Button from '../ui/Button.astro';
+import ArticleCard from '../ArticleCard.astro';
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+---
+<section class="sec" data-mood="night"><div class="wrap">
+  <SectionHead title="Notes from the studio."><Button href="/blog/" label="All articles" /></SectionHead>
+  <div class="cards3">{posts.map((p) => <ArticleCard post={p} />)}</div>
+</div></section>

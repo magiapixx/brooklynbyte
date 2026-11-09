@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran asset-designer. Membuat aset visual: ilustrasi dan diagram SVG siap animasi, data 3D prosedural, gambar raster teroptimasi, OG image, plus manifest docs/assets.md. Tidak menganimasikan."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `asset-designer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/asset-designer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

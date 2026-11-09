@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran security-reviewer. Audit secret, dependency, validasi input, header keamanan, dan data pribadi. Hanya melapor."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `security-reviewer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/security-reviewer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

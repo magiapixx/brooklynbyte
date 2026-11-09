@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran frontend-engineer. Membangun halaman dan section Astro + Tailwind sesuai spec dan design system. Tidak menangani animasi."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `frontend-engineer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/frontend-engineer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

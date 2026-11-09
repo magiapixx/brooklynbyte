@@ -1,0 +1,8 @@
+---
+import SectionHead from '../ui/SectionHead.astro';
+const steps = [ ['Discover', '1 week', ['Interviews', 'Audit', 'Analytics', 'Goals']], ['Define', '2 weeks', ['Strategy', 'User flows', 'Wireframes']], ['Design', '3–4 weeks', ['Identity', 'UI design', 'Prototype', 'Testing']], ['Build', '4–8 weeks', ['Engineering', 'QA', 'Launch', 'Handover', 'Growth']] ] as const;
+---
+<section class="sec" data-mood="night"><div class="wrap">
+  <SectionHead title="Every step is built to cut risk, not corners." />
+  <div class="proc" data-rise>{steps.map(([n, d, cs]) => <article class="pcard"><header><h3 class="type-h3">{n}</h3><span class="type-small">{d}</span></header><ul>{cs.map((c) => <li class="chip chip-sm">{c}</li>)}</ul></article>)}</div>
+</div></section>

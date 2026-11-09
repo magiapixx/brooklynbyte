@@ -1,0 +1,21 @@
+---
+import { SITE } from '../data/site';
+---
+<footer class="site-footer" data-mood="paper">
+  <div class="fgrid">
+    <div class="fcell" data-reveal>
+      <a class="flink type-h3" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a class="flink" href={SITE.whatsapp} target="_blank" rel="noopener">Chat on WhatsApp <span class="fa" aria-hidden="true">↗</span></a>
+    </div>
+    <div class="fcell" data-reveal>
+      <nav class="frow" aria-label="Footer">{SITE.nav.map((n) => <a class="flink" href={n.href}>{n.label}</a>)}</nav>
+      <p class="frow">{SITE.social.map((s) => <a class="flink muted" href={s.href}>{s.label}</a>)}</p>
+    </div>
+  </div>
+  <div class="flegal type-small muted"><p>© 2026 Brooklynbyte · Fictional company, built for testing</p><button class="mtoggle flink" type="button" data-motion-toggle>Animations</button><a class="totop" href="#main">Back to top <span class="a" aria-hidden="true">↑</span></a></div>
+  <div class="wm" aria-hidden="true"><p>{'brooklynbyte'.split('').map((c, i) => <span class:list={{ 'wm-byte': i >= 8 }}>{c}</span>)}</p></div>
+</footer>
+
+<style>
+  .wm .wm-byte { color: var(--color-accent); }
+</style>

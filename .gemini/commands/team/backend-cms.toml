@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran backend-cms. Form (Astro Actions), content collections/CMS, env, dan integrasi pihak ketiga."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `backend-cms`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/backend-cms.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

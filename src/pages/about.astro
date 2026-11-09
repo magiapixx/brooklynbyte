@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Process from '../components/sections/Process.astro';
+import Clients from '../components/sections/Clients.astro';
+import SectionHead from '../components/ui/SectionHead.astro';
+import { team, img } from '../data/site';
+const pr = [['Small senior teams', 'Every project is led by the people you meet in the pitch. No hand-offs to juniors.'], ['Ship weekly', 'You see real progress every week, not a big reveal after three months.'], ['Measure everything', 'We agree on numbers before we start, and report on them after launch.'], ['Leave you stronger', 'Clean code, documented systems and training, so you never depend on us.']];
+---
+<BaseLayout title="About us" description="Brooklynbyte is 24 designers, engineers and strategists in Brooklyn, shipping every week since 2016.">
+  <section class="page-head" data-mood="night"><div class="wrap">
+    <h1 class="type-hero" data-split>A small studio<br />with a big<br />shipping habit.</h1>
+  </div></section>
+  <!-- Cerita studio: kalimat besar + foto (desain Editorial) -->
+  <section class="sec ab-ed" data-mood="paper" aria-label="Our story">
+    <div class="wrap">
+      <div class="ab-ed-grid">
+        <p class="ab-ed-text" data-fill>
+          Brooklynbyte started in a Williamsburg loft in 2016 with three people
+          <span class="d-pill"><Image src={img('studio-b')} alt="" width={240} height={120} loading="lazy" /></span>
+          and one bank. Today we are 24 designers, engineers and strategists
+          <span class="d-pill"><Image src={img('t-1')} alt="" width={240} height={120} loading="lazy" /></span>
+          still in Brooklyn, still shipping every week.
+        </p>
+        <figure class="ab-ed-fig">
+          <div class="ab-ed-img" data-clip><Image src={img('studio-a')} alt="Abstract blue 3D render" widths={[480, 800, 1100]} sizes="(min-width:1024px) 34vw, 92vw" loading="lazy" /></div>
+          <figcaption class="type-caption muted">Abstract blue 3D render.</figcaption>
+        </figure>
+      </div>
+      <dl class="ab-ed-facts" data-stagger>
+        <div><dt class="type-small muted">Clients who come back</dt><dd class="is-acc">91%</dd></div>
+        <div><dt class="type-small muted">People, 2016 to today</dt><dd>3 → 24</dd></div>
+        <div><dt class="type-small muted">How often we ship</dt><dd>Weekly</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="sec principles" data-mood="night"><div class="wrap">
+    <SectionHead title="Four promises we keep." />
+    <div class="acc">{pr.map(([n, d], i) => <div class="acc-item"><button class="acc-btn" type="button" aria-expanded="false" aria-controls={`pr-${i}`}><span class="type-small muted">0{i + 1}</span><span class="type-h3" style="font-weight:500">{n}</span><span class="arr" aria-hidden="true">→</span></button><div class="acc-panel" id={`pr-${i}`}><div class="acc-body" style="grid-template-columns:1fr"><p class="muted" style="max-width:56ch">{d}</p></div></div></div>)}</div>
+  </div></section>
+  <!-- Tim + angka (dipindah dari beranda E) -->
+  <section class="e-team" data-mood="paper" aria-labelledby="e-team-t">
+    <div class="e-team-img" data-clip><Image src={img('studio-b')} alt="Abstract blue 3D render" widths={[900, 1600, 2200]} sizes="100vw" loading="lazy" /></div>
+    <div class="wrap e-team-in">
+      <dl class="e-team-stats" data-stagger>
+        <div><dd>10</dd><dt>Years of experience</dt></div>
+        <div><dd>24</dd><dt>People in the team</dt></div>
+        <div><dd>9</dd><dt>Countries we work in</dt></div>
+      </dl>
+      <div class="e-team-copy">
+        <h2 class="e-h2" id="e-team-t" data-split>Our great team</h2>
+        <p class="muted" data-reveal>We are a group of positive thinkers, dedicated to making a difference in the digital world. Designers, engineers and strategists under one roof in Williamsburg.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" data-mood="paper"><div class="wrap">
+    <SectionHead title="The people you'll work with." />
+    <div class="team" data-stagger>{team.map((m) => <figure><div class="img"><Image src={img(m.image)} alt="" widths={[400, 800]} sizes="(min-width: 1024px) 23vw, 46vw" /></div><figcaption><b class="type-small" style="display:block">{m.name}</b><span class="type-caption">{m.role}</span></figcaption></figure>)}</div>
+  </div></section>
+  <Process />
+  <Clients />
+</BaseLayout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { SplitText } from 'gsap/SplitText';
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  const root = document.documentElement;
+  // Kalimat cerita (desain Editorial): kata dan foto menyala berurutan mengikuti scroll.
+  const run = () => {
+    const el = document.querySelector<HTMLElement>('.ab-ed [data-fill]');
+    if (!el || root.classList.contains('no-motion')) return;
+    new SplitText(el, { type: 'words', wordsClass: 'd-w', aria: 'none' });
+    const items = [...el.querySelectorAll<HTMLElement>('.d-w, .d-pill')];
+    gsap.set(items, { opacity: 0.5 }); // 0.5: kata redup tetap kontras ≥ 3:1 (teks besar)
+    gsap.to(items, { opacity: 1, stagger: 0.05, ease: 'none', scrollTrigger: { trigger: el, start: 'top 78%', end: 'bottom 52%', scrub: 0.5 } });
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(run));
+</script>
+
+<style>
+  .e-h2 { font-size: var(--text-4xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
+  /* 8. Team */
+  .e-team { position: relative; }
+  .e-team-img { height: clamp(420px, 80svh, 820px); overflow: hidden; }
+  .e-team-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+  .e-team-in { display: grid; gap: 32px; padding-block: clamp(40px, 5vw, 72px) var(--section); }
+  .e-team-stats { display: flex; gap: clamp(24px, 4vw, 64px); margin: 0; flex-wrap: wrap; }
+  .e-team-stats dd { margin: 0; font-size: var(--text-4xl); line-height: 1; letter-spacing: -0.05em; font-weight: 500; }
+  .e-team-stats dt { font-size: var(--text-xs); color: var(--color-muted); margin-top: 8px; }
+  .e-team-stats > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+  .e-team-copy { display: grid; gap: 18px; max-width: 46ch; }
+  @media (min-width: 1024px) { .e-team-in { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+
+  .ab-ed-grid { display: grid; gap: clamp(32px, 4vw, 64px); align-items: start; }
+  @media (min-width: 1024px) { .ab-ed-grid { grid-template-columns: 7fr 5fr; } }
+  .ab-ed-text { font-size: clamp(1.9rem, 1.1rem + 2.8vw, 4.2rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; text-wrap: pretty; }
+  .d-pill { display: inline-block; width: 2.1em; height: 0.86em; margin: 0 0.08em; border-radius: 999px; overflow: hidden; vertical-align: -0.06em; background: var(--color-surface); }
+  .d-pill img { width: 100%; height: 100%; object-fit: cover; }
+  .ab-ed-fig { display: grid; gap: 12px; margin: 0; }
+  .ab-ed-img { overflow: hidden; border-radius: var(--radius); }
+  .ab-ed-img img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .ab-ed-facts { display: grid; margin: clamp(48px, 6vw, 96px) 0 0; }
+  .ab-ed-facts > div { display: grid; justify-items: center; gap: 28px; padding: 20px 16px; text-align: center; }
+  .ab-ed-facts dd { margin: 0; font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4.4rem); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
+  .ab-ed-facts .is-acc { color: var(--color-accent); }
+  @media (min-width: 768px) {
+    .ab-ed-facts { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

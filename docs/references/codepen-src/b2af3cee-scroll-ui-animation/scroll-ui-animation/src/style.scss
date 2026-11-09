@@ -1,0 +1,150 @@
+@font-face {
+    src: url("https://assets.codepen.io/2479807/Matter-Regular.woff2");
+    font-family: "Matter";
+}
+
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --desktop-width: 1792;
+    --tablet-width: 1400;
+    --phone-width: 960;
+
+    --section--small: 12rem;
+    --section--medium: 16rem;
+    --section--big: 24rem;
+}
+
+html {
+    font-size: calc(100vw / var(--desktop-width) * 10);
+}
+
+body {
+    background-color: white;
+    min-height: 100vh;
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Matter", sans-serif;
+    font-size: clamp(14px, 1.6rem, 1.6rem);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 200rem;
+    padding-left: 12rem;
+    padding-right: 12rem;
+    margin-inline: auto;
+    height: 100%;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+p {
+    max-width: 50ch;
+    color: #82837f;
+}
+
+h2 {
+    font-size: 12rem;
+    letter-spacing: -0.2rem;
+    line-height: 1.1;
+    margin-bottom: 6.4rem;
+}
+
+.image-scale {
+    &__topline {
+        font-size: 2.4rem;
+    }
+    &__section {
+        position: relative;
+        height: 100vh;
+
+        .divider {
+            position: absolute;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            background-color: #ebebeb;
+            transform: translateX(-1px);
+        }
+
+        .box {
+            position: absolute;
+            z-index: 3;
+            background-color: white;
+
+            &--one {
+                top: 0;
+                left: 50%;
+                height: 50%;
+                width: 50%;
+                transform-origin: top center;
+                transform: scaleY(0);
+                border-bottom: solid 1px #ebebeb;
+            }
+
+            &--two {
+                top: 50%;
+                left: 75%;
+                width: 25%;
+                height: 50%;
+                transform: scaleX(0);
+                transform-origin: right center;
+                border-left: solid 1px #ebebeb;
+            }
+
+            &--three {
+                top: 50%;
+                left: 50%;
+                width: 25%;
+                height: 50%;
+                transform: scaleY(0);
+                transform-origin: bottom center;
+            }
+
+            &--four {
+                top: 50%;
+                left: 50%;
+                width: 12.5%;
+                height: 25%;
+                transform: scaleX(0);
+                transform-origin: left center;
+            }
+        }
+    }
+
+    &__left {
+        display: grid;
+        width: 50%;
+        padding-right: 8rem;
+        padding-top: 32rem;
+    }
+
+    &__right {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        transform-origin: center right;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+
+        img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}

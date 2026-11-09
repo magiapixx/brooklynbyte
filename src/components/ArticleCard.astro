@@ -1,0 +1,12 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'blog'> }
+const { post } = Astro.props;
+const date = post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+<a class="acard" href={`/blog/${post.id}/`} data-cat={post.data.tag.toLowerCase()}>
+  <div class="img" data-clip><Image src={post.data.cover} alt={post.data.coverAlt} widths={[600, 1200]} sizes="(min-width: 1024px) 31vw, (min-width: 768px) 46vw, 92vw" /></div>
+  <div class="meta type-small muted"><span class="chip chip-sm">{post.data.tag}</span><time datetime={post.data.date.toISOString()}>{date}</time><span>· {post.data.readingTime}</span></div>
+  <h3 class="type-h3">{post.data.title}</h3>
+</a>

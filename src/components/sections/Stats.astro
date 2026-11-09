@@ -1,0 +1,8 @@
+---
+import SectionHead from '../ui/SectionHead.astro';
+const stats = [ { l: 'Projects shipped', n: 140, s: '+' }, { l: 'Countries', n: 18, s: '' }, { l: 'Awards', n: 32, s: '' }, { l: 'Client retention', n: 91, s: '%' } ];
+---
+<section class="sec" data-mood="night"><div class="wrap">
+  <SectionHead title="Ten years of shipping work people use." />
+  <dl class="stats" data-stagger>{stats.map((s) => <div><dt class="type-label muted">{s.l}</dt><dd class="type-stat" data-count={s.n} data-suffix={s.s}>{s.n}{s.s}</dd></div>)}</dl>
+</div></section>

@@ -1,0 +1,32 @@
+---
+import Button from '../ui/Button.astro';
+import { SITE } from '../../data/site';
+---
+<div class="e-end">
+  <section class="e-cta" aria-labelledby="e-cta-t">
+    <div class="wrap e-cta-in">
+      <h2 class="e-cta-t" id="e-cta-t">Let's build something great together.</h2>
+      <div class="e-cta-side">
+        <p class="type-small">Get in touch to explore how we can help your business reach its full potential.</p>
+        <div class="e-cta-acts">
+          <Button href={SITE.whatsapp} label="Chat on WhatsApp" whatsapp variant="solid" iconSize={20} magnetic />
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<style>
+  .e-end { --blue: oklch(.52 .22 262); --blue-d: oklch(.48 .21 262); --line: oklch(1 0 0 / .28); background: var(--blue); color: #fff; }
+  .e-cta { background: var(--blue); color: #fff; }
+  .e-cta-in { display: grid; gap: 28px; padding-block: clamp(80px, 10vw, 160px) clamp(56px, 7vw, 112px); justify-items: center; text-align: center; }
+  .e-cta-t { font-size: clamp(2.8rem, 1rem + 6.6vw, 8.5rem); line-height: .92; letter-spacing: -0.055em; font-weight: 600; max-width: 12ch; }
+  .e-cta-side { display: grid; gap: 20px; max-width: 46ch; justify-items: center; }
+  .e-cta-side > p { opacity: .95; }
+  .e-cta-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; justify-content: center; }
+  .e-cta :global(.btn-solid) { background: #fff; color: var(--blue-d); border-color: #fff; }
+  .e-cta :global(.btn-solid::before) { background: oklch(.2 .08 262); }
+  .e-cta :global(.btn-solid:hover) { color: #fff; }
+  :global(.e-end .wrap) { max-width: none; }
+</style>

@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran ui-ux-designer. Merancang alur pengguna, peta section, warna, huruf, dan rencana gerak di docs/design-direction.md, lalu membuat mockup visual statis di design/ untuk direview owner sebelum coding. Tidak menulis kode produksi."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `ui-ux-designer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/ui-ux-designer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

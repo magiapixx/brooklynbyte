@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran motion-developer. Pemilik tunggal semua gerak: animasi standar GSAP/ScrollTrigger/Lenis (data-motion) dan momen signature WebGL, 3D, tipografi kinetik, transisi halaman (data-creative) dengan fallback statis."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `motion-developer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/motion-developer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

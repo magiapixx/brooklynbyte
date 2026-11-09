@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Menu from '../components/Menu.astro';
+import Footer from '../components/Footer.astro';
+import SiteOutro from '../components/sections/SiteOutro.astro';
+import WaIcon from '../components/ui/WaIcon.astro';
+import { SITE } from '../data/site';
+import fontUrl from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+interface Props { title: string; description: string; image?: string; type?: 'website' | 'article'; loader?: boolean; noindex?: boolean }
+const { title, description, image, type, loader = false, noindex = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <SEO title={title} description={description} image={image} type={type} noindex={noindex} />
+    <script is:inline define:vars={{ loader }}>
+      (function () {
+        var r = document.documentElement, pref = null;
+        try { pref = localStorage.getItem('bb-motion'); } catch (e) {}
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) r.classList.add('sys-reduce');
+        if (pref === 'off' || (reduce && pref !== 'on')) { r.classList.add('no-motion'); return; }
+        try {
+          if (sessionStorage.getItem('bb-pt')) r.classList.add('pt-cover');
+          if (loader && !sessionStorage.getItem('bb-loaded')) r.classList.add('is-loading');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-mood="night" class:list={{ 'wide-sections': Astro.url.pathname !== '/' }}>
+    <a class="sr-only" href="#main">Skip to content</a>
+    {loader && <div class="loader" aria-hidden="true"><b>brooklynbyte</b><span class="ctr">[00]</span></div>}
+    <div class="pt" aria-hidden="true"><span></span></div>
+    <Header />
+    <Menu />
+    <main id="main"><slot /><SiteOutro /></main>
+    <Footer />
+    <a class="wa" href={SITE.whatsapp} target="_blank" rel="noopener" aria-label="Chat on WhatsApp" data-magnetic><WaIcon /><span class="lbl">Chat on WhatsApp</span></a>
+    <div class="cursor" aria-hidden="true"><span>View</span></div>
+    <script>import '../scripts/main';</script>
+  </body>
+</html>
+
+<style>
+  :global(body.wide-sections main .wrap) { max-width: none; }
+  :global(body.wide-sections .site-header .wrap) { max-width: none; }
+</style>

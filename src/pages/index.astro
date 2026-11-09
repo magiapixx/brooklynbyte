@@ -1,0 +1,458 @@
+---
+// Beranda (desain E · "Studio", disetujui owner 2026-11-09): gabungan referensi Studio Opus (layout putih bersih,
+// daftar layanan bernomor, section gelap, pricing, perspectives) dan Mondra (wordmark raksasa, grid karya 2×2,
+// workflow 3 kartu, testimoni gambar besar, awards). Aksen biru kini berlaku untuk seluruh situs (global.css).
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, services, img } from '../data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+const pad = (n: number) => String(n).padStart(2, '0');
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+// Contoh deliverable per layanan (urut sama dengan services di site.json).
+const deliver = [
+  ['Positioning', 'Naming', 'Logo & identity', 'Brand guidelines', 'Tone of voice'],
+  ['Astro & Shopify', 'Headless CMS', 'E-commerce', 'Performance', 'Accessibility'],
+  ['User research', 'Flows & wireframes', 'UI design', 'Prototyping', 'Usability tests'],
+  ['Frontend', 'iOS & Android', 'APIs & integrations', 'QA', 'Docs & handover'],
+  ['Launch films', 'Social motion', 'Interactive pieces', '3D & illustration'],
+  ['Analytics setup', 'A/B testing', 'CRO', 'Monthly reports'],
+];
+// Foto besar per layanan di section We deliver (urut sama dengan services).
+const dvImg = ['p-loom', 'p-verde', 'p-signal', 'studio-a', 'p-pulse', 'p-kinfolk'];
+// Review klien per layanan (urut sama dengan services): [kutipan, nama, institusi, foto]. Lebih dari satu review = berganti otomatis.
+// [CONTOH] Selain tiga review pertama (Orbit Labs, Kinfolk Market, Halcyon Bank), review di sini fiktif untuk mockup; foto memakai foto tim. Ganti dengan review asli klien.
+const reviews = [
+  [["The best naming process we've ever been through. Calm, fast and backed by research.", 'Marcus Hale', 'Orbit Labs', 'c-2'],
+   ['A brand our whole team finally knows how to use.', 'Lena Fischer', 'Atlas Freight', 't-1']],
+  [['Our checkout went from eleven steps to three. Revenue followed in the first month.', 'Elena Rossi', 'Kinfolk Market', 'c-3'],
+   ['We update the site ourselves now, and it loads in under a second.', 'Omar Haddad', 'Meridian Health', 't-2']],
+  [['Collaborating with the team was effortless. They shipped our app redesign in ten weeks and our ratings doubled.', 'Priya Nair', 'Halcyon Bank', 'c-1'],
+   ['Every sprint ended with real users testing real screens.', 'Grace Lin', 'Signal', 't-3']],
+  [['Clean code, real docs and tests. Our own team ships on it every week.', 'Daniel Park', 'Northwind', 't-4'],
+   ['The handover was the smoothest we have ever had.', 'Ben Carter', 'Loom Studio', 't-7']],
+  [['The launch film did more for our sign-ups than a year of ads.', 'Sofia Marin', 'Pulse', 't-5'],
+   ['People still share the interactive piece months later.', 'Hana Sato', 'Orbit Labs', 't-8']],
+  [['Monthly reports we actually read. Every test is tied to a number we care about.', 'Jonas Weber', 'Verde', 't-6'],
+   ['Three A/B tests in, conversion was up and the debates were over.', 'Elena Rossi', 'Kinfolk Market', 'c-3']],
+];
+// Paket (menggantikan Our workflow + Pricing plans): fokus pada manfaat, harga hanya catatan kecil.
+// [CONTOH] Nama paket, manfaat, durasi, dan harga fiktif untuk mockup; ganti dengan data asli.
+const packages = [
+  { name: 'Basic', tag: 'A sharp start for a new product.', time: '2–3 weeks', from: '$4,000',
+    items: ['Logo and core visual identity', 'A fast one-page website', 'Social media starter kit', 'Two rounds of revisions', '14 days of launch support'] },
+  { name: 'Plus', tag: 'For teams ready to grow.', time: '4–6 weeks', from: '$9,000', badge: 'Most chosen',
+    items: ['Everything in Basic', 'A multi-page site you can edit yourself', 'UI design for your key product screens', 'Analytics and conversion setup', '30 days of launch support'] },
+  { name: 'Identity', tag: 'A complete brand, built to last.', time: '6–10 weeks', from: '$15,000',
+    items: ['Brand strategy and positioning', 'Naming support and tone of voice', 'Full visual identity and guidelines', 'Website, motion and launch assets', 'A dedicated senior lead'] },
+];
+---
+<BaseLayout title="Brooklynbyte" description="Brooklynbyte is an independent design and engineering studio in Brooklyn. Strategy, brand, websites and products for startups and growing companies.">
+  <!-- 1. Hero: meta + angka, foto lebar, wordmark raksasa -->
+  <section class="e-hero" data-mood="paper" aria-labelledby="e-h1">
+    <div class="wrap e-hero-top">
+      <div class="e-hero-meta" data-intro>
+        <p class="type-small muted">Brooklyn, NY<br />Est. 2016</p>
+        <div class="e-faces" aria-hidden="true">{[0, 1, 2].map((k) => <Image src={img(`t-${k + 1}`)} alt="" width={88} height={88} />)}</div>
+        <p class="type-small">24 people who<br />ship every week</p>
+      </div>
+      <div class="e-hero-lead" data-intro>
+        <h1 id="e-h1" class="e-lead">Strategy, brand, websites and products for companies ready for change.</h1>
+        <dl class="e-mini">
+          <div><dd>10</dd><dt>Years of practice</dt></div>
+          <div><dd>140+</dd><dt>Products shipped</dt></div>
+          <div><dd>32</dd><dt>Awards</dt></div>
+        </dl>
+      </div>
+    </div>
+    <div class="e-hero-img" data-clip><Image src={img('studio-a')} alt="Abstract blue 3D render" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" /></div>
+    <p class="e-word" aria-hidden="true"><span>brooklyn</span><b>byte</b></p>
+  </section>
+
+  <!-- 2. Intro: kalimat besar dengan tiga foto kapsul di antara kata (melebar saat terlihat); kata abu-abu menjadi hitam mengikuti scroll -->
+  <section class="sec e-intro io2" data-mood="paper" aria-label="About us">
+    <div class="wrap">
+      <p class="io2-t" data-scrub>We are a design <span class="io-pic" aria-hidden="true"><Image src={img('studio-b')} alt="" widths={[300, 600]} sizes="16vw" loading="lazy" /></span> and engineering studio driven by a love for clear ideas, honest interfaces <span class="io-pic" aria-hidden="true"><Image src={img('p-signal')} alt="" widths={[300, 600]} sizes="16vw" loading="lazy" /></span> and code that lasts. We partner with founders and teams to build brands <span class="io-pic" aria-hidden="true"><Image src={img('studio-a')} alt="" widths={[300, 600]} sizes="16vw" loading="lazy" /></span> and products people come back to.</p>
+    </div>
+  </section>
+
+  <!-- 3. Selected works: foto proyek selebar layar, nama klien raksasa di atas foto -->
+  <section class="sec e-wk" data-mood="paper" aria-labelledby="e-works">
+    <div class="wrap e-head">
+      <h2 class="e-h2" id="e-works" data-split>Selected works <sup>({projects.length})</sup></h2>
+      <a class="ulink type-small" href="/projects/">View all →</a>
+    </div>
+    <div class="e-wk-list">
+      {projects.slice(0, 4).map((p, i) => (
+        <a class="e-wk-item" href={`/projects/${p.id}/`} data-cursor="View">
+          <div class="e-wk-img"><Image src={p.data.cover} alt={p.data.coverAlt} widths={[900, 1600, 2400]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} /></div>
+          <div class="wrap e-wk-cap">
+            <span class="e-wk-n type-small">{pad(i + 1)} / {pad(projects.length)}</span>
+            <h3 class="e-wk-t">{p.data.client}</h3>
+            <ul class="e-wk-tags"><li class="is-res">{p.data.result}</li><li>{p.data.categoryLabel}</li><li>{p.data.year}</li></ul>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 4. We deliver: daftar layanan di kiri, foto raksasa menempel di kanan dan berganti mengikuti layanan yang aktif -->
+  <section class="sec e-dv2" data-mood="paper" aria-labelledby="e-deliver">
+    <div class="wrap e-dv2-head">
+      <h2 class="e-h2" id="e-deliver" data-split>We deliver</h2>
+      <p class="e-big" data-split>Every service has a common thread: a clear purpose. It's not about adding more, it's about giving your product direction.</p>
+      <dl class="e-mini">
+        <div><dd data-count="140" data-suffix="+">140+</dd><dt>Projects done</dt></div>
+        <div><dd data-count="40" data-suffix="+">40+</dd><dt>Global clients</dt></div>
+        <div><dd data-count="32">32</dd><dt>Our awards</dt></div>
+      </dl>
+    </div>
+    <div class="e-dv2-grid">
+      <ol class="e-dv2-list">
+        {services.map((s, i) => (
+          <li class:list={['e-dv2-item', { 'is-on': i === 0 }]} data-i={i}>
+            <div class="e-dv2-mimg"><Image src={img(dvImg[i])} alt="" widths={[600, 1000]} sizes="92vw" loading="lazy" /></div>
+            <span class="e-dv2-n">{pad(i + 1)}</span>
+            <h3 class="e-dv2-t">{s.name}</h3>
+            <p class="muted">{s.description}</p>
+            <ul class="e-dv2-tags">{deliver[i].map((d) => <li>{d}</li>)}</ul>
+            <div class="dv-rv" data-rv aria-label="Client reviews">
+              {reviews[i].map(([q, n, c, f], k) => (
+                <figure class:list={['dv-rv-i', { 'is-on': k === 0 }]} aria-hidden={k === 0 ? undefined : 'true'}>
+                  <Image src={img(f)} alt="" width={64} height={64} />
+                  <figcaption><b>{n}</b> · {c}</figcaption>
+                  <blockquote>“{q}”</blockquote>
+                </figure>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="e-dv2-media" aria-hidden="true">
+        {services.map((_, i) => <div class:list={['e-dv2-img', { 'is-on': i === 0 }]} data-i={i}><Image src={img(dvImg[i])} alt="" widths={[900, 1600, 2200]} sizes="60vw" loading="lazy" /></div>)}
+        <span class="e-dv2-count"><b data-dvn>01</b> / {pad(services.length)}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Choose your package: kartu paket mendatar bertingkat (Basic → Identity), nama paket tegak di kiri, manfaat di depan, harga kecil; Plus berlatar biru -->
+  <section class="sec e-pk" data-mood="paper" aria-labelledby="e-pkg">
+    <div class="wrap">
+      <div class="e-head">
+        <h2 class="e-h2" id="e-pkg" data-split>Choose your package</h2>
+        <p class="type-small muted e-pkg-side">Every package comes with one senior team.<br />Pick the level that fits where you are.</p>
+      </div>
+      <ol class="e-pkgs">
+        {packages.map((p, i) => (
+          <li class:list={['e-pkg', { 'is-acc': i === 1 }]}>
+            <header>
+              <span class="e-pkg-n">{i + 1}.</span>
+              {p.badge && <span class="e-badge">{p.badge}</span>}
+            </header>
+            <div class="e-pkg-top">
+              <h3 class="e-pkg-name">{p.name}</h3>
+              <p class="e-pkg-tag">{p.tag}</p>
+            </div>
+            <ul class="e-pkg-list">{p.items.map((it) => <li>{it}</li>)}</ul>
+            <footer>
+              <p class="e-pkg-meta">{p.time} · from {p.from}</p>
+              <a class="e-pkg-go" href={SITE.whatsapp} aria-label={`Start with ${p.name}`}><span>Start with {p.name}</span><i aria-hidden="true">↗</i></a>
+            </footer>
+          </li>
+        ))}
+      </ol>
+      <p class="type-caption muted e-fine">Packages and prices are examples for this mockup.</p>
+    </div>
+  </section>
+
+  <!-- 10. Perspectives: kartu editorial asimetris, satu unggulan dan dua kartu pendamping -->
+  <section class="sec e-ps" data-mood="paper" aria-labelledby="e-persp">
+    <div class="wrap">
+      <div class="e-persp-head">
+        <h2 class="e-h2" id="e-persp" data-split>Our perspectives</h2>
+        <p class="type-small muted">Ideas on design, technology and building things that last.</p>
+        <a class="e-persp-all" href="/blog/">All articles <span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="e-persp" data-stagger>
+        {posts.map((b) => (
+          <li><a class="e-persp-card" href={`/blog/${b.id}/`} data-cursor="Read">
+            <Image class="e-persp-img" src={b.data.cover} alt="" widths={[500, 900]} sizes="(min-width:1024px) 32vw, (min-width:640px) 48vw, 100vw" loading="lazy" />
+            <time class="e-persp-date type-caption" datetime={b.data.date.toISOString()}>{fmt(b.data.date)}</time>
+            <div class="e-persp-copy">
+              <span class="e-persp-meta type-small">{b.data.tag}</span>
+              <h3 class="e-persp-t">{b.data.title}</h3>
+            </div>
+          </a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { SplitText } from 'gsap/SplitText';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(SplitText, ScrollTrigger);
+  const root = document.documentElement;
+  // Wordmark hero: huruf naik satu per satu saat halaman dibuka, lalu bergeser pelan mengikuti scroll.
+  const run = () => {
+    if (root.classList.contains('no-motion')) return;
+    const word = document.querySelector<HTMLElement>('.e-word');
+    if (word) {
+      const s = new SplitText(word.querySelectorAll('span, b'), { type: 'chars', aria: 'none' });
+      gsap.from(s.chars, { yPercent: 110, duration: 1.1, ease: 'power4.out', stagger: 0.035, delay: 0.25 });
+      gsap.to(word, { xPercent: -4, ease: 'none', scrollTrigger: { trigger: '.e-hero', start: 'top top', end: 'bottom top', scrub: true } });
+    }
+    const img = document.querySelector('.e-hero-img img');
+    if (img) gsap.to(img, { yPercent: -12, ease: 'none', scrollTrigger: { trigger: '.e-hero-img', start: 'top top', end: 'bottom top', scrub: true } });
+    // Elemen di atas foto bergeser sedikit ke kanan saat scroll, mengimbangi wordmark di bawah foto yang bergeser ke kiri.
+    gsap.to('.e-hero-meta, .e-hero-lead', { x: () => innerWidth * 0.04, ease: 'none', scrollTrigger: { trigger: '.e-hero', start: 'top top', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+  };
+  // We deliver: layanan di tengah layar menjadi aktif; foto besar berganti (tirai dari bawah).
+  const items = [...document.querySelectorAll<HTMLElement>('.e-dv2-item')];
+  const imgs = [...document.querySelectorAll<HTMLElement>('.e-dv2-img')];
+  const num = document.querySelector<HTMLElement>('[data-dvn]');
+  const activate = (i: number) => {
+    items.forEach((it, k) => it.classList.toggle('is-on', k === i));
+    imgs.forEach((im, k) => { im.classList.toggle('is-on', k === i); im.style.zIndex = k === i ? '1' : '0'; });
+    if (num) num.textContent = String(i + 1).padStart(2, '0');
+  };
+  items.forEach((it, i) => ScrollTrigger.create({ trigger: it, start: 'top 55%', end: 'bottom 55%', onToggle: (st) => { if (st.isActive) activate(i); } }));
+  // Selected works: foto bergerak pelan (parallax) dan judul naik saat kartu masuk layar.
+  const outro = () => {
+    if (root.classList.contains('no-motion')) return;
+    const ct = document.querySelector<HTMLElement>('.e-cta-t');
+    if (ct) { const sp = new SplitText(ct, { type: 'words', aria: 'none' }); gsap.from(sp.words, { yPercent: 60, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.04, scrollTrigger: { trigger: '.e-cta', start: 'top 70%' } }); }
+  };
+  const works = () => {
+    if (root.classList.contains('no-motion')) return;
+    document.querySelectorAll<HTMLElement>('.e-wk-item').forEach((it) => {
+      gsap.fromTo(it.querySelector('img'), { yPercent: 0 }, { yPercent: -12, ease: 'none', scrollTrigger: { trigger: it, start: 'top bottom', end: 'bottom top', scrub: true } });
+      gsap.from(it.querySelector('.e-wk-img'), { clipPath: 'inset(8% 6% 8% 6% round 32px)', ease: 'none', scrollTrigger: { trigger: it, start: 'top bottom', end: 'top 25%', scrub: true } });
+      gsap.from(it.querySelectorAll('.e-wk-t, .e-wk-tags li'), { yPercent: 60, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.06, scrollTrigger: { trigger: it, start: 'top 60%' } });
+    });
+  };
+  // Review kapsul: bila lebih dari satu, berganti tiap 4,5 detik (naik keluar, masuk dari bawah) selama terlihat; berhenti saat hover.
+  document.querySelectorAll<HTMLElement>('[data-rv]').forEach((box) => {
+    const its = [...box.querySelectorAll<HTMLElement>('.dv-rv-i')];
+    if (its.length < 2 || root.classList.contains('no-motion')) return;
+    let cur = 0, seen = false, hold = false;
+    box.addEventListener('pointerenter', () => { hold = true; });
+    box.addEventListener('pointerleave', () => { hold = false; });
+    new IntersectionObserver(([e]) => { seen = e.isIntersecting; }).observe(box);
+    setInterval(() => {
+      if (!seen || hold || document.hidden) return;
+      const prev = its[cur]; cur = (cur + 1) % its.length; const next = its[cur];
+      its.forEach((x) => x.classList.remove('is-out'));
+      prev.classList.remove('is-on'); prev.classList.add('is-out'); prev.setAttribute('aria-hidden', 'true');
+      next.classList.add('is-on'); next.removeAttribute('aria-hidden');
+    }, 4500);
+  });
+  // Intro: kata abu-abu menjadi hitam mengikuti scroll; foto kapsul melebar saat terlihat.
+  const intro = () => {
+    if (root.classList.contains('no-motion')) return;
+    const sc = document.querySelector<HTMLElement>('[data-scrub]');
+    if (sc) { const sp = new SplitText(sc, { type: 'words', aria: 'none' }); gsap.fromTo(sp.words, { opacity: 0.5 }, { opacity: 1, ease: 'none', stagger: 0.1, scrollTrigger: { trigger: sc, start: 'top 80%', end: 'bottom 40%', scrub: true } }); }
+    gsap.utils.toArray<HTMLElement>('.io-pic').forEach((pic) => gsap.from(pic, { width: 0, marginInline: 0, duration: 1.1, ease: 'power4.inOut', clearProps: 'width,marginInline', scrollTrigger: { trigger: pic.parentElement!, start: 'top 75%', toggleActions: 'play none none reverse' } }));
+  };
+  // Kartu paket: desktop = kartu mendatar masuk dari kiri ke kanan (geser + tirai terbuka ke kanan), satu per satu; HP = naik.
+  const pk = () => {
+    if (root.classList.contains('no-motion')) return;
+    const cards = gsap.utils.toArray<HTMLElement>('.e-pkg');
+    const list = document.querySelector('.e-pkgs');
+    if (!list) return;
+    if (!matchMedia('(min-width: 1024px)').matches) { gsap.from(cards, { y: 48, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.07, scrollTrigger: { trigger: list, start: 'top 85%' } }); return; }
+    cards.forEach((c, i) => gsap.timeline({ scrollTrigger: { trigger: list, start: 'top 75%' }, delay: i * 0.15 })
+      .fromTo(c, { x: () => -innerWidth * 0.25, clipPath: 'inset(0% 100% 0% 0% round 32px)' }, { x: 0, clipPath: 'inset(0% 0% 0% 0% round 32px)', duration: 1.2, ease: 'power4.inOut', clearProps: 'clipPath' })
+      .from(c.querySelectorAll('.e-pkg-list li'), { x: -40, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.05 }, '-=0.5'));
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => requestAnimationFrame(() => { run(); works(); outro(); intro(); pk(); }));
+</script>
+
+<style>
+  /* Lebar konten semua section = hero & footer (tepi layar dikurangi gutter, tanpa batas 1600px) */
+  :global(main .wrap), :global(.site-header .wrap) { max-width: none; }
+  :global(html body .wa) { background: #fff; color: oklch(.45 .2 262); }
+  :global(html body .wa::after) { border-color: #fff; }
+  /* Section gelap di halaman ini benar-benar hitam seperti referensi */
+
+  .e-h2 { font-size: var(--text-4xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
+  .e-h2 sup { font-size: .32em; vertical-align: top; letter-spacing: 0; color: var(--color-muted); }
+  .e-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 56px); }
+  .e-white { color: #fff; }
+  .e-mini { display: flex; gap: clamp(20px, 3vw, 48px); margin: 0; }
+  .e-mini dd { margin: 0; font-size: var(--text-3xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .e-mini dt { font-size: var(--text-xs); color: var(--color-muted); margin-top: 8px; max-width: 12ch; }
+  .e-mini > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+  .e-mini > div:nth-child(2) dd { color: var(--color-accent); }
+
+  /* 1. Hero */
+  .e-hero { padding-top: 120px; overflow: clip; }
+  .e-hero-top { display: grid; gap: 32px; margin-bottom: clamp(24px, 3vw, 40px); }
+  .e-hero-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .e-faces { display: flex; }
+  .e-faces img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-bg); margin-left: -10px; }
+  .e-faces img:first-child { margin-left: 0; }
+  .e-hero-lead { display: grid; gap: 28px; }
+  .e-lead { font-size: var(--text-2xl); line-height: 1.12; letter-spacing: -0.03em; font-weight: 500; max-width: 22ch; }
+  @media (min-width: 1024px) {
+    .e-hero-top { grid-template-columns: 1fr 1fr; align-items: end; }
+    .e-hero-lead { justify-items: start; justify-self: end; width: fit-content; } /* teks + angka menempel ke sisi kanan */
+  }
+  .e-hero-img { margin-inline: var(--gutter); height: clamp(320px, 58svh, 720px); border-radius: var(--radius); overflow: hidden; }
+  .e-hero-img img { width: 100%; height: 115%; object-fit: cover; }
+  .e-word { margin: clamp(8px, 1vw, 16px) 0 0; padding-inline: calc(var(--gutter) - .04em); font-size: 16.3vw; line-height: .82; letter-spacing: -0.065em; font-weight: 600; white-space: nowrap; overflow: hidden; padding-bottom: .26em; margin-bottom: -.18em; }
+  .e-word b { color: var(--orange); font-weight: 600; }
+  .e-word :global(div) { display: inline-block; }
+
+  /* 2. Intro */
+  .io2-t { font-size: var(--text-3xl); line-height: 1.2; letter-spacing: -0.035em; font-weight: 500; max-width: 32ch; margin: 0 auto; text-align: center; }
+  .io-pic { display: inline-block; width: 2.4em; height: .82em; margin-inline: .06em; border-radius: 999px; overflow: hidden; vertical-align: -.08em; }
+  .io-pic img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* 3. Works: foto selebar layar */
+  .e-wk { padding-bottom: 0; }
+  .e-wk-list { display: grid; gap: 0; }
+  .e-wk-item { position: relative; display: block; height: clamp(520px, 92svh, 1000px); overflow: hidden; color: #fff; }
+  .e-wk-img { position: absolute; inset: 0; overflow: hidden; }
+  .e-wk-img img { width: 100%; height: 118%; object-fit: cover; will-change: transform; }
+  .e-wk-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, oklch(0 0 0 / .6), transparent 45%); }
+  .e-wk-cap { position: absolute; inset: auto 0 0; display: grid; gap: 14px; padding-bottom: clamp(24px, 4vw, 56px); }
+  .e-wk-n { opacity: .85; font-variant-numeric: tabular-nums; }
+  .e-wk-t { font-size: clamp(3rem, 1rem + 8.4vw, 10rem); line-height: .9; letter-spacing: -0.055em; font-weight: 600; max-width: 12ch; transition: translate var(--duration-slow) var(--ease-brand); } /* translate terpisah dari transform GSAP */
+  .e-wk-item:hover .e-wk-t, .e-wk-item:focus-visible .e-wk-t { translate: 16px 0; }
+  .e-wk-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .e-wk-tags li { padding: 7px 14px; border-radius: 999px; border: 1px solid oklch(1 0 0 / .55); background: oklch(1 0 0 / .14); backdrop-filter: blur(8px); font-size: var(--text-xs); }
+  .e-wk-tags .is-res { background: var(--orange); border-color: var(--orange); font-weight: 600; }
+
+  /* 4. Deliver: foto raksasa menempel */
+  .e-dv2-head { display: grid; gap: 24px; margin-bottom: clamp(32px, 5vw, 72px); }
+  .e-dv2-head .e-big { margin: 0 0 0 auto; }
+  .e-dv2-list { list-style: none; margin: 0; padding: 0 var(--gutter); }
+  .e-dv2-item { display: grid; gap: 14px; align-content: center; padding: 40px 0; border-top: 1px solid var(--color-border); }
+  .e-dv2-mimg { aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; margin-bottom: 8px; }
+  .e-dv2-mimg img { width: 100%; height: 100%; object-fit: cover; }
+  .e-dv2-n { font-size: var(--text-sm); color: var(--color-muted); font-variant-numeric: tabular-nums; }
+  .e-dv2-t { font-size: var(--text-3xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
+  .e-dv2-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 6px 0 0; padding: 0; }
+  .e-dv2-tags li { padding: 6px 13px; border-radius: 999px; border: 1px solid var(--color-border); font-size: var(--text-xs); }
+  /* Review klien: kapsul satu baris (foto, nama · institusi, kutipan terpotong); beberapa review bergantian */
+  .dv-rv { display: grid; justify-self: start; max-width: 100%; margin-top: 10px; border-radius: 999px; background: var(--color-surface); overflow: hidden; }
+  .dv-rv-i { grid-area: 1 / 1; display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; padding: 5px 18px 5px 5px; font-size: var(--text-xs); visibility: hidden; opacity: 0; transform: translateY(110%); transition: transform .7s cubic-bezier(.7, 0, .2, 1), opacity .5s var(--ease-brand), visibility 0s .7s; }
+  .dv-rv-i.is-on { visibility: visible; opacity: 1; transform: none; transition-delay: .08s, .08s, 0s; }
+  .dv-rv-i.is-out { transform: translateY(-110%); }
+  .dv-rv-i img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex: none; filter: grayscale(1); transition: filter var(--duration-base); }
+  .e-dv2-item.is-on .dv-rv-i img { filter: none; }
+  .dv-rv-i figcaption { flex: none; white-space: nowrap; color: var(--color-muted); }
+  .dv-rv-i figcaption b { font-weight: 600; color: var(--color-fg); }
+  .dv-rv-i blockquote { min-width: 0; margin: 0; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  :global(html.no-motion) .dv-rv-i { transition: none; }
+  .e-dv2-media { display: none; }
+  @media (min-width: 1024px) {
+    .e-dv2-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+    .e-dv2-list { padding-right: clamp(32px, 4vw, 72px); }
+    .e-dv2-item { min-height: 72svh; border-top: 0; opacity: .32; transition: opacity var(--duration-base) var(--ease-brand); }
+    .e-dv2-item.is-on { opacity: 1; }
+    .e-dv2-item.is-on .e-dv2-t { color: var(--color-accent); }
+    .e-dv2-mimg { display: none; }
+    .e-dv2-media { display: block; position: sticky; top: 0; height: 100svh; overflow: hidden; border-radius: var(--radius) 0 0 var(--radius); }
+    .e-dv2-img { position: absolute; inset: 0; clip-path: inset(100% 0 0 0); transition: clip-path .9s cubic-bezier(.7, 0, .2, 1); }
+    .e-dv2-img.is-on { clip-path: inset(0 0 0 0); z-index: 1; }
+    .e-dv2-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); transition: transform 1.4s var(--ease-brand); }
+    .e-dv2-img.is-on img { transform: scale(1); }
+    .e-dv2-count { position: absolute; z-index: 2; left: 28px; bottom: 24px; color: #fff; font-size: var(--text-sm); font-variant-numeric: tabular-nums; mix-blend-mode: difference; }
+    .e-dv2-count b { font-size: var(--text-3xl); font-weight: 500; letter-spacing: -0.04em; }
+    /* tanpa JS / gerak mati: semua layanan tampil penuh */
+    :global(html.no-motion) .e-dv2-item, :global(html:not(.js)) .e-dv2-item { opacity: 1; }
+  }
+
+  /* 5. Choose your package */
+  .e-pkg-side { text-align: right; }
+  .e-pkgs { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-rows: 1fr; align-items: stretch; gap: 12px; }
+  .e-pkg { display: grid; grid-template-rows: auto auto 1fr auto; gap: clamp(20px, 2vw, 28px); padding: clamp(22px, 2.4vw, 32px); border-radius: var(--radius); background: var(--color-surface); transition: translate var(--duration-slow) var(--ease-brand); }
+  .e-pkg:hover { translate: 0 -6px; }
+  .e-pkg header { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 28px; }
+  .e-badge { padding: 5px 12px; border-radius: 999px; background: var(--color-accent); color: #fff; font-size: var(--text-xs); font-weight: 600; }
+  .e-pkg-n { font-size: var(--text-xl); line-height: 1; font-weight: 500; letter-spacing: -0.03em; color: var(--color-muted); }
+  .e-pkg-name { font-size: var(--text-3xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
+  .e-pkg-tag { margin: 8px 0 0; font-size: var(--text-sm); color: var(--color-muted); }
+  .e-pkg-list { list-style: none; margin: 0; padding: 18px 0 0; border-top: 1px solid var(--color-border); display: grid; align-content: start; gap: 12px; font-size: var(--text-base); line-height: 1.35; }
+  .e-pkg-list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+  .e-pkg-list li::before { content: "✓"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--color-accent); color: #fff; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .e-pkg footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .e-pkg-meta { margin: 0; font-size: var(--text-xs); color: var(--color-muted); }
+  .e-pkg-go { display: inline-flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px; border-radius: 999px; background: var(--color-fg); color: var(--color-bg); font-size: var(--text-sm); text-decoration: none; transition: background-color var(--duration-base); }
+  .e-pkg-go i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--color-bg); color: var(--color-fg); font-style: normal; transition: rotate var(--duration-base) var(--ease-brand); }
+  .e-pkg-go:hover i, .e-pkg-go:focus-visible i { rotate: 45deg; }
+  .e-pkg-go:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .e-pkg-go:active { scale: .97; }
+  .e-pkg.is-acc { background: var(--orange); color: #fff; }
+  .e-pkg.is-acc :is(.e-pkg-n, .e-pkg-tag, .e-pkg-meta) { color: oklch(1 0 0 / .8); }
+  .e-pkg.is-acc .e-pkg-list { border-color: oklch(1 0 0 / .25); }
+  .e-pkg.is-acc .e-pkg-list li::before { background: #fff; color: oklch(.45 .2 262); }
+  .e-pkg.is-acc .e-pkg-go { background: #fff; color: oklch(.3 .15 262); }
+  .e-pkg.is-acc .e-badge { background: #fff; color: oklch(.45 .2 262); }
+  .e-pkg.is-acc .e-pkg-go i { background: oklch(.45 .2 262); color: #fff; }
+  @media (min-width: 1024px) {
+    .e-pkgs { grid-template-columns: repeat(3, 1fr); align-items: end; }
+    .e-pkg:nth-child(1) { min-height: 520px; }
+    .e-pkg:nth-child(2) { min-height: 580px; }
+    .e-pkg:nth-child(3) { min-height: 640px; }
+  }
+  /* Desktop: kartu diputar mendatar, sisi bawah menempel di kiri; lebar bertingkat; nama paket tegak di sisi kiri */
+  @media (min-width: 1024px) {
+    .e-pk .e-pkgs { grid-template-columns: 1fr; grid-auto-rows: 1fr; align-items: stretch; overflow: clip; }
+    .e-pk .e-pkg { min-height: 0; grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr) auto; grid-template-rows: auto 1fr; grid-template-areas: "head list foot" "top list foot"; column-gap: clamp(28px, 3vw, 56px); row-gap: 18px; }
+    .e-pk .e-pkg:nth-child(1) { width: 72%; }
+    .e-pk .e-pkg:nth-child(2) { width: 86%; }
+    .e-pk .e-pkg:nth-child(3) { width: 100%; }
+    .e-pk .e-pkg header { grid-area: head; justify-content: start; }
+    .e-pk .e-pkg-top { grid-area: top; align-self: end; }
+    .e-pk .e-pkg-list { grid-area: list; grid-template-columns: 1fr 1fr; column-gap: 28px; padding: 0 0 0 clamp(28px, 3vw, 56px); border-top: 0; border-left: 1px solid var(--color-border); align-content: center; }
+    .e-pk .e-pkg.is-acc .e-pkg-list { border-color: oklch(1 0 0 / .25); }
+    .e-pk .e-pkg footer { grid-area: foot; flex-direction: column; align-items: end; justify-content: space-between; }
+    .e-pk .e-pkg:hover { translate: -6px 0; }
+    .e-pk .e-pkg { grid-template-columns: auto minmax(0, 2fr) auto; grid-template-areas: "top list foot" "top list foot"; }
+    .e-pk .e-pkg header { position: absolute; top: clamp(22px, 2.4vw, 32px); right: clamp(22px, 2.4vw, 32px); }
+    .e-pk .e-pkg { position: relative; }
+    .e-pk .e-pkg footer { justify-content: end; padding-top: 44px; }
+    .e-pk .e-pkg-top { align-self: stretch; display: flex; flex-direction: column-reverse; justify-content: start; gap: 10px; writing-mode: vertical-rl; rotate: 180deg; }
+    .e-pk .e-pkg-name { font-size: var(--text-4xl); }
+    .e-pk .e-pkg-tag { margin: 0; }
+  }
+  .e-fine { margin-top: 16px; }
+
+  /* 10. Perspectives */
+  .e-persp-head { display: grid; gap: 14px; width: min(100%, 520px); margin: 0 0 clamp(28px, 4vw, 56px) auto; }
+  .e-persp-head .e-h2 { text-wrap: balance; }
+  .e-persp-head > p { max-width: 42ch; }
+  .e-persp-all { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; width: fit-content; min-height: 44px; margin-top: 4px; padding: 0 16px; border: 1px solid var(--color-border); border-radius: 999px; font-size: var(--text-small, var(--text-sm)); transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast); }
+  .e-persp-all:hover, .e-persp-all:focus-visible { color: var(--color-bg); background: var(--color-fg); border-color: var(--color-fg); }
+  .e-persp-all:active { scale: .97; }
+  .e-persp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, clamp(220px, 26vw, 360px)); gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .e-persp li { min-width: 0; min-height: 0; }
+  .e-persp li:first-child { grid-column: 1; grid-row: 1 / span 2; }
+  .e-persp li:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .e-persp li:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .e-persp-card { position: relative; isolation: isolate; display: flex; height: 100%; min-height: 220px; flex-direction: column; justify-content: space-between; gap: 16px; overflow: hidden; padding: clamp(14px, 2vw, 24px); border-radius: 8px; color: #fff; background: var(--color-surface); text-decoration: none; }
+  .e-persp-card::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / .08) 0%, transparent 35%, rgb(0 0 0 / .68) 100%); content: ""; }
+  .e-persp-img { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-brand); }
+  .e-persp-card:hover .e-persp-img, .e-persp-card:focus-visible .e-persp-img { transform: scale(1.04); }
+  .e-persp-date { width: fit-content; padding: 5px 10px; border-radius: 999px; color: var(--color-fg); background: rgb(255 255 255 / .88); }
+  .e-persp-copy { display: grid; gap: 6px; }
+  .e-persp-meta { color: rgb(255 255 255 / .82); }
+  .e-persp-t { max-width: 28ch; font-size: clamp(1.15rem, 1rem + 1.1vw, 1.8rem); line-height: 1.08; letter-spacing: -0.035em; font-weight: 500; text-wrap: balance; }
+  .e-persp li:first-child .e-persp-t { font-size: clamp(1.5rem, 1rem + 2.1vw, 3rem); }
+  .e-persp-card:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -5px; }
+  @media (max-width: 639px) {
+    .e-persp-head { margin-left: 0; }
+    .e-persp { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: clamp(220px, 72vw, 340px); }
+    .e-persp li:first-child, .e-persp li:nth-child(2), .e-persp li:nth-child(3) { grid-column: 1; grid-row: auto; }
+  }
+
+</style>

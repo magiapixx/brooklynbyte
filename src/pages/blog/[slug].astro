@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import SectionHead from '../../components/ui/SectionHead.astro';
+export async function getStaticPaths() {
+  const all = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+  return all.map((post) => ({ params: { slug: post.id }, props: { post, related: all.filter((x) => x.id !== post.id).slice(0, 3) } }));
+}
+interface Props { post: CollectionEntry<'blog'>; related: CollectionEntry<'blog'>[] }
+const { post, related } = Astro.props; const d = post.data;
+const { Content } = await render(post);
+const date = d.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+<BaseLayout title={d.title} description={d.description} image={d.cover.src} type="article">
+  <div class="readbar" aria-hidden="true"></div>
+  <section class="page-head" data-mood="night" style="padding-bottom:0"><div class="wrap">
+    <div class="post-head">
+      <p class="type-small muted" data-intro style="display:flex;gap:12px;align-items:center"><a class="ulink" href="/blog/">Journal</a> / <span class="chip chip-sm">{d.tag}</span></p>
+      <h1 class="type-h1" style="margin-top:24px" data-split>{d.title}</h1>
+      <p class="type-small muted" style="margin-top:24px" data-intro>By {d.author} · <time datetime={d.date.toISOString()}>{date}</time> · {d.readingTime} read</p>
+    </div>
+    <div class="post-img" data-clip><Image src={d.cover} alt={d.coverAlt} widths={[800, 1600]} sizes="100vw" loading="eager" /></div>
+  </div></section>
+  <section class="sec" data-mood="night" style="padding-top:0"><div class="wrap"><article class="prose"><Content /></article></div></section>
+  <section class="sec" data-mood="paper"><div class="wrap">
+    <SectionHead title="Related articles." />
+    <div class="cards3">{related.map((p) => <ArticleCard post={p} />)}</div>
+  </div></section>
+</BaseLayout>

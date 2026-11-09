@@ -1,0 +1,88 @@
+{
+  "services": [
+    {
+      "name": "Brand strategy & identity",
+      "description": "Positioning, naming, logo and a visual system that works from a pitch deck to a billboard.",
+      "image": "p-northwind"
+    },
+    {
+      "name": "Websites & e-commerce",
+      "description": "Fast, accessible sites on Astro or Shopify that your team can update without calling us.",
+      "image": "p-atlas"
+    },
+    {
+      "name": "Product design",
+      "description": "Research, flows and interfaces for web and mobile apps, tested with real users every sprint.",
+      "image": "p-halcyon"
+    },
+    {
+      "name": "Engineering",
+      "description": "Frontend, mobile and APIs built to last, with tests, docs and a clean handover.",
+      "image": "p-meridian"
+    },
+    {
+      "name": "Motion & campaigns",
+      "description": "Launch films, social motion and interactive moments people remember and share.",
+      "image": "p-pulse"
+    },
+    {
+      "name": "Growth & analytics",
+      "description": "Measurement, experiments and monthly reports that tie design to revenue.",
+      "image": "p-kinfolk"
+    }
+  ],
+  "clients": [
+    "Halcyon Bank",
+    "Northwind",
+    "Atlas Freight",
+    "Meridian",
+    "Kinfolk",
+    "Pulse",
+    "Verde Homes",
+    "Orbit Labs",
+    "Loom & Thread",
+    "Signal FM"
+  ],
+  "team": [
+    {
+      "name": "Maya Okafor",
+      "role": "Founder, Creative Director",
+      "image": "t-1"
+    },
+    {
+      "name": "Daniel Reyes",
+      "role": "Technical Director",
+      "image": "t-2"
+    },
+    {
+      "name": "Sora Kim",
+      "role": "Design Lead",
+      "image": "t-3"
+    },
+    {
+      "name": "Leo Brandt",
+      "role": "Engineering Lead",
+      "image": "t-4"
+    },
+    {
+      "name": "Amara Singh",
+      "role": "Product Designer",
+      "image": "t-5"
+    },
+    {
+      "name": "Theo Laurent",
+      "role": "Motion Designer",
+      "image": "t-6"
+    },
+    {
+      "name": "Nina Petrova",
+      "role": "Frontend Engineer",
+      "image": "t-7"
+    },
+    {
+      "name": "Jonah Wells",
+      "role": "Strategist",
+      "image": "t-8"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Gemini CLI
+
+Sesi utama berperan sebagai Orchestrator.
+
+@./AGENTS.md
+@./agents/orchestrator.md

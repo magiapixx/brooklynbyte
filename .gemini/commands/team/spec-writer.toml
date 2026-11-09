@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran spec-writer. Mengubah brief klien menjadi docs/spec.md (riset, sitemap, acceptance criteria, pertanyaan terbuka, tabel task). Tidak menulis kode."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `spec-writer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/spec-writer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

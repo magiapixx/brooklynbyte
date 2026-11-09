@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const filters = [['all', 'All'], ['branding', 'Branding'], ['web', 'Web'], ['product', 'Product'], ['campaign', 'Campaign']];
+---
+<BaseLayout title="Projects" description="Selected brands, websites and products by Brooklynbyte, 2023–2026.">
+  <section class="page-head" data-mood="night"><div class="wrap">
+    <h1 class="type-hero" data-split>Work that moved<br />the numbers.</h1>
+    <div class="row"><p class="type-lead muted" style="max-width:46ch" data-intro>A selection of brands, websites and products we designed and built between 2023 and 2026.</p>
+      <div class="filters" data-filter="#plist" data-intro role="group" aria-label="Filter projects">{filters.map(([k, l]) => <button class="chip" type="button" data-f={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}</button>)}</div></div>
+  </div></section>
+  <section class="sec" data-mood="night" style="padding-top:0" data-preview="#pj-preview"><div class="wrap">
+    <div class="plist" id="plist" data-stagger>
+      {projects.map((p, i) => <a class="prow" href={`/projects/${p.id}/`} data-cat={p.data.category} data-img={p.data.cover.src} data-cursor="View"><span class="n type-small muted">{String(i + 1).padStart(2, '0')}</span><span class="nm">{p.data.name}</span><span class="cat type-small muted">{p.data.categoryLabel}</span><span class="type-small muted" style="text-align:right">{p.data.year}</span></a>)}
+    </div></div>
+    <div class="preview" id="pj-preview" aria-hidden="true"><img src={projects[0].data.cover.src} alt="" /></div>
+  </section>
+</BaseLayout>

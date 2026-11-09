@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran design-system. Membuat token desain Tailwind v4 dan komponen UI dasar sesuai gaya visual proyek (brutalism, minimalism, dll.)."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `design-system`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/design-system.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

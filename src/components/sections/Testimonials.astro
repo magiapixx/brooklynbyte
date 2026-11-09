@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import SectionHead from '../ui/SectionHead.astro';
+import { img } from '../../data/site';
+const t = [
+  ['They shipped our app redesign in ten weeks and our ratings doubled. The team felt like ours.', 'Priya Nair', 'Head of Product, Halcyon Bank', 'c-1'],
+  ["The best naming process we've ever been through. Calm, fast and backed by research.", 'Marcus Hale', 'CEO, Orbit Labs', 'c-2'],
+  ['Our checkout went from eleven steps to three. Revenue followed in the first month.', 'Elena Rossi', 'Founder, Kinfolk Market', 'c-3'],
+];
+---
+<section class="sec" data-mood="paper"><div class="wrap">
+  <SectionHead title="Clients stay for the work and the way we work." />
+  <div class="tgrid" data-stagger>{t.map(([q, n, r, i], k) => <figure class="tcard" data-parallax={k === 1 ? '-6' : undefined}><blockquote class="type-h4" style="font-weight:500">“{q}”</blockquote><figcaption><Image src={img(i)} alt="" width={96} height={96} /><span><b class="type-small" style="display:block">{n}</b><span class="type-caption">{r}</span></span></figcaption></figure>)}</div>
+</div></section>

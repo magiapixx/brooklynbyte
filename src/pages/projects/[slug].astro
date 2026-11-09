@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+export async function getStaticPaths() {
+  const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return all.map((p, i) => ({ params: { slug: p.id }, props: { p, next: all[(i + 1) % all.length] } }));
+}
+interface Props { p: CollectionEntry<'projects'>; next: CollectionEntry<'projects'> }
+const { p, next } = Astro.props; const d = p.data;
+---
+<BaseLayout title={d.name} description={`${d.name}: ${d.result}. ${d.categoryLabel} project by Brooklynbyte, ${d.year}.`} image={d.cover.src}>
+  <section class="page-head" data-mood="night"><div class="wrap">
+    <h1 class="type-hero" data-split>{d.name}</h1>
+    <p class="type-lead muted" style="margin-top:20px" data-intro>{d.result}</p>
+    <dl class="pd-meta" style="margin-top:48px" data-intro>
+      <div><dt class="type-label muted">Client</dt><dd>{d.client}</dd></div>
+      <div><dt class="type-label muted">Category</dt><dd>{d.categoryLabel}</dd></div>
+      <div><dt class="type-label muted">Year</dt><dd>{d.year}</dd></div>
+      <div><dt class="type-label muted">Our role</dt><dd>{d.role}</dd></div>
+    </dl>
+    <div class="pd-hero" data-clip><Image src={d.cover} alt={d.coverAlt} data-parallax="6" widths={[800, 1600]} sizes="100vw" loading="eager" /></div>
+  </div></section>
+  <section class="sec" data-mood="night" style="padding-top:0"><div class="wrap">
+    <div class="pd-sum" data-stagger>
+      <div><p class="type-label muted lbl-dot">Challenge</p><p class="type-lead" style="margin-top:16px">{d.challenge}</p></div>
+      <div><p class="type-label muted lbl-dot">Approach</p><p class="type-lead" style="margin-top:16px">{d.approach}</p></div>
+      <div><p class="type-label muted lbl-dot">Result</p><p class="type-lead" style="margin-top:16px">{d.result}</p></div>
+    </div>
+    <dl class="pd-res" data-stagger>{d.metrics.map((m) => <div><dd class="type-stat">{m.value}</dd><dt class="type-small muted">{m.label}</dt></div>)}</dl>
+  </div></section>
+  <section class="sec" data-mood="paper"><div class="wrap">
+    <div class="gal">{d.gallery.map((g, i) => <figure class:list={[(i === 0 || i === 3) && 'full']} data-clip><Image src={g} alt="" widths={[800, 1600]} sizes={(i === 0 || i === 3) ? '100vw' : '50vw'} /></figure>)}</div>
+    <blockquote class="type-quote" style="max-width:28ch;margin:clamp(64px,8vw,120px) auto 0;text-align:center"><p data-split>“{d.quote}”</p><footer class="type-small muted" style="margin-top:20px">{d.quoteBy}</footer></blockquote>
+  </div></section>
+  <section class="sec" data-mood="night"><div class="wrap">
+    <a class="next" href={`/projects/${next.id}/`} data-cursor="Next"><Image src={next.data.cover} alt="" widths={[800, 1600]} sizes="100vw" />
+      <div class="in"><span class="type-label">{next.data.categoryLabel}</span><span class="type-hero">{next.data.name}</span></div></a>
+  </div></section>
+</BaseLayout>

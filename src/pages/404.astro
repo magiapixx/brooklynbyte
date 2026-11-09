@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+<BaseLayout title="Page not found" description="This page doesn't exist." noindex>
+  <section class="page-head" data-mood="night" style="min-height:80vh"><div class="wrap">
+    <h1 class="type-hero" data-split>This page<br />wandered off.</h1>
+    <div class="row"><p class="type-lead muted" data-intro>It may have moved, or it never existed.</p><div data-intro><Button href="/projects/" label="See our work" variant="solid" /></div></div>
+  </div></section>
+</BaseLayout>

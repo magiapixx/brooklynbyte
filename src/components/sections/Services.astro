@@ -1,0 +1,23 @@
+---
+import { Image } from 'astro:assets';
+import SectionHead from '../ui/SectionHead.astro';
+import { services, img } from '../../data/site';
+---
+<section class="sec" data-mood="night">
+  <div class="wrap">
+    <div class="card-dark">
+      <SectionHead title="What we can do for you." />
+      <!-- data-preview di daftar saja: gambar pop-up hanya muncul saat kursor di atas layanan.
+           data-hover: di perangkat ber-mouse, layanan terbuka saat di-hover (klik/keyboard tetap bisa). -->
+      <div class="acc acc-hover" data-preview="#svc-preview" data-hover>
+        {services.map((s, i) => (
+          <div class:list={['acc-item', i === 0 && 'open']} data-img={img(s.image).src}>
+            <button class="acc-btn" type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`svc-${i}`}><span class="type-small muted">0{i + 1}</span><span class="type-h3" style="font-weight:500">{s.name}</span><span class="arr" aria-hidden="true">→</span></button>
+            <div class="acc-panel" id={`svc-${i}`}><div class="acc-body"><p class="muted">{s.description}</p><Image src={img(s.image)} alt="" widths={[600, 1000]} sizes="(min-width: 768px) 45vw, 90vw" /></div></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="preview" id="svc-preview" aria-hidden="true"><img src={img(services[0].image).src} alt="" /></div>
+</section>

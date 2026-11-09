@@ -1,0 +1,23 @@
+---
+import Button from '../ui/Button.astro';
+---
+<section class="hero" data-mood="night">
+  <div class="wrap">
+    <div class="hero-top">
+      <h1 class="type-hero">We build brands{" "}<br />people scroll for.</h1>
+      <div class="hero-side">
+        <p class="type-lead muted">Brooklynbyte is a design and engineering studio for startups and growing companies. Strategy, brand, websites and products, under one roof.</p>
+        <div class="hero-btns"><Button href="/projects/" label="See our works" class="btn-white" magnetic /></div>
+      </div>
+    </div>
+  </div>
+  <!-- Di luar .wrap supaya bisa melebar sampai layar penuh saat scroll (src/scripts/motion/hero.ts). -->
+  <div class="hero-media">
+    <div class="wrap">
+      <div class="frame">
+        <video muted loop playsinline preload="metadata" poster="/media/hero-poster.webp" aria-hidden="true"><source src="/media/hero.mp4" type="video/mp4" /></video>
+        <div class="frame-meta"><span class="type-label">Scroll ↓</span></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran orchestrator. Tech Lead: membagi brief jadi task, mendelegasikan ke agent lain, berhenti untuk approval owner, dan melapor."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `orchestrator`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/orchestrator.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

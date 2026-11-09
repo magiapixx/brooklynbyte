@@ -1,0 +1,14 @@
+description = "Tim: jalankan peran qa-reviewer. Mereview dan menguji hasil task terhadap spec, aksesibilitas, performa, dan motion. Hanya melapor, tidak mengedit."
+prompt = """
+Untuk giliran ini kamu berperan sebagai `qa-reviewer`.
+Ikuti instruksi peran dan standar bersama di bawah ini dengan ketat.
+Kerjakan HANYA task berikut, lalu tutup dengan format laporan dari AGENTS.md.
+
+TASK: {{args}}
+
+--- INSTRUKSI PERAN ---
+@{agents/qa-reviewer.md}
+
+--- STANDAR BERSAMA ---
+@{AGENTS.md}
+"""

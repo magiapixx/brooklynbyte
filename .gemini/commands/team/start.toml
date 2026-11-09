@@ -1,0 +1,14 @@
+description = "Tim: mulai proyek baru dari brief klien (orchestrator)"
+prompt = """
+Kamu adalah Orchestrator. Brief klien:
+
+{{args}}
+
+Jalankan langkah 1 dan 2 di agents/orchestrator.md: cek repo, lalu MINTA REFERENSI
+desain ke owner dan BERHENTI. Setelah referensi diterima (atau owner menulis
+"tanpa referensi"), lanjutkan langkah 3 sampai 5: serahkan ke @spec_writer
+(atau kerjakan sebagai spec-writer bila subagent tidak tersedia), ringkas spec,
+lalu BERHENTI dan tunggu approval.
+
+@{agents/orchestrator.md}
+"""

@@ -1,0 +1,11 @@
+---
+import WaIcon from './WaIcon.astro';
+interface Props { href: string; label: string; variant?: 'solid' | 'line'; magnetic?: boolean; whatsapp?: boolean; iconSize?: number; class?: string }
+const { href, label, variant = 'line', magnetic = false, whatsapp = false, iconSize = 18, class: cls = '' } = Astro.props;
+const external = /^https?:/.test(href);
+---
+<a class:list={['btn', variant === 'solid' && 'btn-solid', cls]} href={href} data-magnetic={magnetic ? '' : undefined}
+  target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+  {whatsapp && <WaIcon size={iconSize} />}
+  <span class="roll"><span data-t={label}>{label}</span></span>
+</a>

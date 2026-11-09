@@ -1,0 +1,7 @@
+---
+interface Props { title: string; mood?: string }
+const { title } = Astro.props;
+---
+<div class="sec-head">
+  <div class="sec-head-title"><h2 class="type-h2" data-split>{title}</h2><slot /></div>
+</div>
