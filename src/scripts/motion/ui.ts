@@ -7,7 +7,18 @@ import { getLenis } from '../lenis';
 export function initMenu() {
   const menu = $('#menu'), btn = $('.menu-btn'); if (!menu || !btn) return;
   const close = $('.menu-close', menu)!;
+  const syncActive = () => {
+    const cur = location.pathname.replace(/\/$/, '') || '/';
+    $$('.menu-list a', menu).forEach((a) => {
+      const h = (a.getAttribute('href') || '').replace(/\/$/, '') || '/';
+      const on = h === '/' ? cur === '/' : cur === h || cur.startsWith(h + '/');
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+  };
+  syncActive();
   const open = () => {
+    syncActive();
     menu.classList.add('open'); menu.setAttribute('aria-hidden', 'false'); btn.setAttribute('aria-expanded', 'true'); getLenis()?.stop();
     if (motionOn()) gsap.timeline()
       .fromTo(menu, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: MOTION.base, ease: MOTION.c2 })

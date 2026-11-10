@@ -1,6 +1,12 @@
 ---
 import { SITE } from '../data/site';
 import Button from './ui/Button.astro';
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => {
+  const target = href.replace(/\/$/, '') || '/';
+  if (target === '/') return pathname === '/';
+  return pathname === target || pathname.startsWith(target + '/');
+};
 ---
 <div class="menu" id="menu" data-mood="night" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Menu">
   <button class="menu-close" type="button">Close ✕</button>
@@ -9,10 +15,17 @@ import Button from './ui/Button.astro';
       <p class="type-label muted">Brooklynbyte studio</p>
       <address class="type-lead" style="font-style:normal">{SITE.address[0]}<br />{SITE.address[1]}</address>
       <p><a class="ulink type-lead" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-      <p><Button href={SITE.whatsapp} label="Chat on WhatsApp" whatsapp magnetic /></p>
+      <p><Button href={SITE.whatsapp} label="Chat on WhatsApp" whatsapp magnetic variant="solid" /></p>
     </div>
     <nav class="menu-list" aria-label="Main">
-      {SITE.nav.map((n, i) => <a href={n.href}><span class="arr">→</span>{n.label}<sup>0{i + 1}</sup></a>)}
+      {SITE.nav.map((n, i) => {
+        const active = isActive(n.href);
+        return (
+          <a href={n.href} class:list={{ 'is-active': active }} aria-current={active ? 'page' : undefined}>
+            <span class="arr">→</span>{n.label}<sup>0{i + 1}</sup>
+          </a>
+        );
+      })}
     </nav>
   </div>
   <div class="menu-foot type-small muted">{SITE.social.map((s) => <a class="ulink" href={s.href}>{s.label}</a>)}</div>

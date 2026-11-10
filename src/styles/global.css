@@ -144,13 +144,25 @@ h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}
 .menu-list a sup{font-size:var(--text-xs);font-weight:500;letter-spacing:0;vertical-align:top;margin-left:.4em;opacity:.6}
 .menu-list .arr{display:inline-block;width:.6em;overflow:hidden;opacity:0;transform:translateX(-20px);transition:all var(--duration-fast) var(--ease-brand)}
 .menu-list a:hover .arr{opacity:1;transform:none}
+.menu-list a.is-active{color:var(--orange)}
+.menu-list a.is-active sup{color:var(--orange);opacity:1}
 .menu-info{display:grid;gap:20px;align-content:start}
+.menu-info .btn{background:var(--orange);color:oklch(.99 0 0);border-color:var(--orange)}
+.menu-info .btn::before{background:oklch(.45 .2 262)}
+.menu-info .btn:hover,.menu-info .btn:focus-visible{color:oklch(.99 0 0);border-color:var(--orange)}
 .menu-foot{position:absolute;left:var(--gutter);bottom:20px;display:flex;gap:20px}
 @media (max-width:1023px){
-  .menu{display:flex;flex-direction:column;height:100dvh;overflow-y:auto;overscroll-behavior:contain}
-  .menu-in{display:flex;flex:1 0 auto;flex-direction:column;gap:0;height:auto;min-height:0;box-sizing:border-box;padding:80px var(--gutter) 16px}
-  .menu-list{order:-1}.menu-info{margin-top:auto}
-  .menu-foot{position:static;flex-shrink:0;margin:0 var(--gutter) 24px}
+  .menu{display:flex;flex-direction:column;height:100dvh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .menu-in{display:flex;flex:1 0 auto;flex-direction:column;gap:clamp(16px, 3vh, 32px);height:auto;min-height:0;box-sizing:border-box;padding:clamp(56px, 8vh, 72px) var(--gutter) clamp(16px, 2.5vh, 24px)}
+  .menu-close{top:clamp(12px, 2vh, 18px);right:var(--gutter)}
+  .menu-list{order:-1;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:clamp(4px, 1.2vh, 12px)}
+  .menu-list a{justify-content:flex-end;font-size:clamp(2rem, 7.5vw, 3.25rem);line-height:1.15;letter-spacing:-.035em;white-space:nowrap}
+  .menu-list a sup{font-size:clamp(10px, 2.2vw, 13px);margin-left:.35em}
+  .menu-info{display:grid;gap:clamp(10px, 1.8vh, 16px);margin-top:auto}
+  .menu-info .type-label{font-size:var(--text-xs);letter-spacing:.08em}
+  .menu-info address,.menu-info .type-lead{font-size:clamp(.95rem, 2.6vw, 1.1rem);line-height:1.4}
+  .menu-info .btn{min-height:44px;padding:0 20px;font-size:var(--text-xs)}
+  .menu-foot{position:static;flex-shrink:0;display:flex;gap:clamp(14px, 4vw, 24px);margin:0 var(--gutter) clamp(16px, 2.5vh, 24px);font-size:var(--text-xs)}
 }
 
 /* Panel transisi halaman + loader */
