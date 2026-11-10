@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://brooklynbyte.studio',
   trailingSlash: 'always',
+  devToolbar: { enabled: false },
   integrations: [sitemap()],
   vite: { plugins: [tailwindcss()] },
 });
