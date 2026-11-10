@@ -293,7 +293,7 @@ html.js .acc-item.open .acc-panel{height:auto}
 .wm{container-type:inline-size;padding:clamp(16px,2vw,32px) var(--gutter) 0;overflow:hidden;height:calc(100cqw / 5.95 * var(--wm-cut,.765));box-sizing:content-box;margin-bottom:0}
 .wm p{display:flex;justify-content:space-between;font-size:calc(100cqw / 5.95);line-height:.8;font-weight:700;letter-spacing:-.06em}
 .wm span{display:block}
-.flegal{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 24px;padding:0 var(--gutter)}
+.flegal{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px 24px;padding:0 var(--gutter)} .flegal-links{display:grid} .flegal-links .frow{justify-content:flex-end} @media (min-width:768px){.flegal-links{display:flex;align-items:center}}
 .totop{display:inline-flex;align-items:center;gap:8px;min-height:44px}
 .totop .a{transition:transform var(--duration-fast) var(--ease-brand)}.totop:hover .a{transform:translateY(-4px)}
 main{position:relative;z-index:1;background:var(--color-bg);transition:background-color var(--duration-base) var(--ease-brand)}
@@ -358,4 +358,4 @@ html{height:auto;overflow-y:auto}
 body{height:auto;overflow:visible}
 html.is-loading{overflow:hidden}
 
-.mtoggle{background:none;border:0;padding:0;min-height:44px;cursor:pointer;font:inherit;color:inherit}
+
