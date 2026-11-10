@@ -145,10 +145,10 @@ h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}
 .menu-info{display:grid;gap:20px;align-content:start}
 .menu-foot{position:absolute;left:var(--gutter);bottom:20px;display:flex;gap:20px}
 @media (max-width:1023px){
-  .menu{display:block;overflow-y:auto;overscroll-behavior:contain}
-  .menu-in{height:auto;min-height:0;box-sizing:border-box;align-content:start;padding:80px var(--gutter) 16px}
-  .menu-list{order:-1}
-  .menu-foot{position:static;margin:0 var(--gutter) 24px}
+  .menu{display:flex;flex-direction:column;height:100dvh;overflow-y:auto;overscroll-behavior:contain}
+  .menu-in{display:flex;flex:1 0 auto;flex-direction:column;gap:0;height:auto;min-height:0;box-sizing:border-box;padding:80px var(--gutter) 16px}
+  .menu-list{order:-1}.menu-info{margin-top:auto}
+  .menu-foot{position:static;flex-shrink:0;margin:0 var(--gutter) 24px}
 }
 
 /* Panel transisi halaman + loader */
