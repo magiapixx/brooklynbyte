@@ -113,7 +113,7 @@ const packages = [
     <div class="e-dv2-grid">
       <ol class="e-dv2-list">
         {services.map((s, i) => (
-          <li class:list={['e-dv2-item', { 'is-on': i === 0 }]} data-i={i} style={`--i:${i}`}>
+          <li class:list={['e-dv2-item', { 'is-on': i === 0 }]} data-i={i}>
             <div class="e-dv2-mimg"><Image src={img(dvImg[i])} alt="" widths={[600, 1000]} sizes="92vw" loading="lazy" /></div>
             <span class="e-dv2-n">{pad(i + 1)}</span>
             <h3 class="e-dv2-t">{s.name}</h3>
@@ -358,13 +358,17 @@ const packages = [
   .dv-rv-i blockquote { min-width: 0; margin: 0; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   :global(html.no-motion) .dv-rv-i { transition: none; }
   .e-dv2-media { display: none; }
-  /* HP: kartu layanan menumpuk saat scroll. Tiap kartu menempel di atas layar dan kartu berikutnya naik menutupinya;
-     tepi atas kartu sebelumnya tetap mengintip (--i). --h (tinggi kartu, diisi JS) menjaga kartu yang lebih tinggi
+  /* HP: kartu layanan menumpuk saat scroll. Tiap kartu menempel di posisi yang sama di atas layar dan kartu berikutnya
+     naik menutupinya penuh (tanpa tepi mengintip). --h (tinggi kartu, diisi JS) menjaga kartu yang lebih tinggi
      dari layar tetap terbaca sampai bawah sebelum menempel. Tanpa JS atau gerak mati: daftar biasa. */
   @media (max-width: 767px) {
+    /* Semua kartu setinggi kartu tertinggi. Kartu sticky lepas saat dasar daftar mencapai dasar kartu; bila tingginya
+       berbeda, kartu pendek lepas belakangan dan tertinggal saat tumpukan naik. */
+    :global(html.js:not(.no-motion)) .e-dv2-list { display: grid; grid-auto-rows: 1fr; }
     :global(html.js:not(.no-motion)) .e-dv2-item {
+      align-content: start;
       position: sticky;
-      top: min(calc(12px + var(--i, 0) * 10px), calc(100svh - var(--h, 100svh) - 12px));
+      top: min(12px, calc(100svh - var(--h, 100svh) - 12px));
       margin-inline: calc(var(--gutter) * -1);
       padding: var(--gutter) var(--gutter) 32px;
       overflow: hidden;
