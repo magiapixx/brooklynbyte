@@ -76,7 +76,9 @@
 [data-mood="ember"]{--color-bg:oklch(.55 .22 262);--color-surface:oklch(.5 .2 262);--color-fg:oklch(.99 0 0);--color-muted:oklch(1 0 0 / .8);--color-border:oklch(1 0 0 / .25);--color-accent:oklch(.99 0 0);--color-on-accent:oklch(.45 .2 262)}
 [data-mood]{background:var(--color-bg);color:var(--color-fg)}
 /* Section selalu punya latar sendiri (QA a11y: teks gelap tidak boleh tampil di atas latar body gelap saat transisi) */
-html{color-scheme:dark;-webkit-text-size-adjust:100%}
+/* Halaman tidak boleh bisa digeser ke samping: elemen yang digeser/diperbesar animasi tidak menambah lebar halaman.
+   `clip` (bukan `hidden`) agar position:sticky tetap bekerja; `hidden` hanya cadangan untuk browser lama. */
+html{color-scheme:dark;-webkit-text-size-adjust:100%;overflow-x:hidden;overflow-x:clip}
 
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;-webkit-font-smoothing:antialiased;
