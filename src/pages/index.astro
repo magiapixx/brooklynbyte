@@ -216,7 +216,7 @@ const packages = [
   // We deliver: layanan di tengah layar menjadi aktif; foto besar berganti (tirai dari bawah).
   const items = [...document.querySelectorAll<HTMLElement>('.e-dv2-item')];
   const imgs = [...document.querySelectorAll<HTMLElement>('.e-dv2-img')];
-  const num = document.querySelector<HTMLElement>('[data-dvn]');
+  const num = document.querySelector<HTMLElement>('[data-dvn]');   if (!root.classList.contains('no-motion')) {     items.forEach((it, i) => gsap.from(it, {       y: 32,       opacity: 0,       duration: 0.8,       delay: i * 0.06,       ease: 'power3.out',       clearProps: 'transform,opacity',       scrollTrigger: { trigger: it, start: 'top 88%', once: true },     }));   }   const mobileImageMotion = gsap.matchMedia();   mobileImageMotion.add('(max-width: 767px)', () => {     if (root.classList.contains('no-motion')) return;     const frames = gsap.utils.toArray<HTMLElement>('.e-dv2-mimg');     frames.forEach((frame) => {       const image = frame.querySelector('img');       if (!image) return;       const list = frame.closest<HTMLElement>('.e-dv2-list');       if (!list) return;       const gutter = parseFloat(getComputedStyle(list).paddingLeft);       gsap.fromTo(frame, { marginLeft: 0, marginRight: 0 }, {         marginLeft: -gutter,         marginRight: -gutter,         borderRadius: 0,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });       gsap.fromTo(image, { scale: 1.08 }, {         scale: 1,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });     });     return () => frames.forEach((frame) => {       gsap.set(frame, { clearProps: 'marginLeft,marginRight,borderRadius' });       gsap.set(frame.querySelector('img'), { clearProps: 'transform' });     });   });
   const activate = (i: number) => {
     items.forEach((it, k) => it.classList.toggle('is-on', k === i));
     imgs.forEach((im, k) => { im.classList.toggle('is-on', k === i); im.style.zIndex = k === i ? '1' : '0'; });
@@ -299,7 +299,7 @@ const packages = [
   .e-faces img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-bg); margin-left: -10px; }
   .e-faces img:first-child { margin-left: 0; }
   .e-hero-lead { display: grid; gap: 28px; }
-  .e-lead { font-size: var(--text-2xl); line-height: 1.12; letter-spacing: -0.03em; font-weight: 500; max-width: 22ch; }
+  .e-lead { font-size: var(--text-2xl); line-height: 1.12; letter-spacing: -0.03em; font-weight: 500; max-width: 22ch; }   @media (max-width: 767px) {     .e-hero-meta, .e-mini { display: none; }   }
   @media (min-width: 1024px) {
     .e-hero-top { grid-template-columns: 1fr 1fr; align-items: end; }
     .e-hero-lead { justify-items: start; justify-self: end; width: fit-content; } /* teks + angka menempel ke sisi kanan */
@@ -334,13 +334,13 @@ const packages = [
   .e-dv2-head { display: grid; gap: 24px; margin-bottom: clamp(32px, 5vw, 72px); }
   .e-dv2-head .e-big { margin: 0 0 0 auto; }
   .e-dv2-list { list-style: none; margin: 0; padding: 0 var(--gutter); }
-  .e-dv2-item { display: grid; gap: 14px; align-content: center; padding: 40px 0; border-top: 1px solid var(--color-border); }
+  .e-dv2-item { display: grid; gap: 14px; align-content: center; padding: 40px 0; }
   .e-dv2-mimg { aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; margin-bottom: 8px; }
   .e-dv2-mimg img { width: 100%; height: 100%; object-fit: cover; }
   .e-dv2-n { font-size: var(--text-sm); color: var(--color-muted); font-variant-numeric: tabular-nums; }
   .e-dv2-t { font-size: var(--text-3xl); line-height: 1; letter-spacing: -0.04em; font-weight: 500; }
   .e-dv2-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 6px 0 0; padding: 0; }
-  .e-dv2-tags li { padding: 6px 13px; border-radius: 999px; border: 1px solid var(--color-border); font-size: var(--text-xs); }
+  .e-dv2-tags li { padding: 6px 13px; border-radius: 999px; font-size: var(--text-xs); }
   /* Review klien: kapsul satu baris (foto, nama · institusi, kutipan terpotong); beberapa review bergantian */
   .dv-rv { display: grid; justify-self: start; max-width: 100%; margin-top: 10px; border-radius: 999px; background: var(--color-surface); overflow: hidden; }
   .dv-rv-i { grid-area: 1 / 1; display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; padding: 5px 18px 5px 5px; font-size: var(--text-xs); visibility: hidden; opacity: 0; transform: translateY(110%); transition: transform .7s cubic-bezier(.7, 0, .2, 1), opacity .5s var(--ease-brand), visibility 0s .7s; }
@@ -356,7 +356,7 @@ const packages = [
   @media (min-width: 1024px) {
     .e-dv2-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
     .e-dv2-list { padding-right: clamp(32px, 4vw, 72px); }
-    .e-dv2-item { min-height: 72svh; border-top: 0; opacity: .32; transition: opacity var(--duration-base) var(--ease-brand); }
+    .e-dv2-item { min-height: 72svh; opacity: .32; transition: opacity var(--duration-base) var(--ease-brand); }
     .e-dv2-item.is-on { opacity: 1; }
     .e-dv2-item.is-on .e-dv2-t { color: var(--color-accent); }
     .e-dv2-mimg { display: none; }
