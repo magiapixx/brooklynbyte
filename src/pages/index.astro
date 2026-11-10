@@ -113,7 +113,7 @@ const packages = [
     <div class="e-dv2-grid">
       <ol class="e-dv2-list">
         {services.map((s, i) => (
-          <li class:list={['e-dv2-item', { 'is-on': i === 0 }]} data-i={i}>
+          <li class:list={['e-dv2-item', { 'is-on': i === 0 }]} data-i={i} style={`--i:${i}`}>
             <div class="e-dv2-mimg"><Image src={img(dvImg[i])} alt="" widths={[600, 1000]} sizes="92vw" loading="lazy" /></div>
             <span class="e-dv2-n">{pad(i + 1)}</span>
             <h3 class="e-dv2-t">{s.name}</h3>
@@ -216,7 +216,12 @@ const packages = [
   // We deliver: layanan di tengah layar menjadi aktif; foto besar berganti (tirai dari bawah).
   const items = [...document.querySelectorAll<HTMLElement>('.e-dv2-item')];
   const imgs = [...document.querySelectorAll<HTMLElement>('.e-dv2-img')];
-  const num = document.querySelector<HTMLElement>('[data-dvn]');   if (!root.classList.contains('no-motion')) {     items.forEach((it, i) => gsap.from(it, {       y: 32,       opacity: 0,       duration: 0.8,       delay: i * 0.06,       ease: 'power3.out',       clearProps: 'transform,opacity',       scrollTrigger: { trigger: it, start: 'top 88%', once: true },     }));   }   const mobileImageMotion = gsap.matchMedia();   mobileImageMotion.add('(max-width: 767px)', () => {     if (root.classList.contains('no-motion')) return;     const frames = gsap.utils.toArray<HTMLElement>('.e-dv2-mimg');     frames.forEach((frame) => {       const image = frame.querySelector('img');       if (!image) return;       const list = frame.closest<HTMLElement>('.e-dv2-list');       if (!list) return;       const gutter = parseFloat(getComputedStyle(list).paddingLeft);       gsap.fromTo(frame, { marginLeft: 0, marginRight: 0 }, {         marginLeft: -gutter,         marginRight: -gutter,         borderRadius: 0,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });       gsap.fromTo(image, { scale: 1.08 }, {         scale: 1,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });     });     return () => frames.forEach((frame) => {       gsap.set(frame, { clearProps: 'marginLeft,marginRight,borderRadius' });       gsap.set(frame.querySelector('img'), { clearProps: 'transform' });     });   });
+  const num = document.querySelector<HTMLElement>('[data-dvn]');   if (!root.classList.contains('no-motion')) {     items.forEach((it, i) => gsap.from(it, {       y: 32,       opacity: 0,       duration: 0.8,       delay: i * 0.06,       ease: 'power3.out',       clearProps: 'transform,opacity',       scrollTrigger: { trigger: it, start: 'top 88%', once: true },     }));   }   const mobileImageMotion = gsap.matchMedia();   mobileImageMotion.add('(max-width: 767px)', () => {     if (root.classList.contains('no-motion')) return;     const frames = gsap.utils.toArray<HTMLElement>('.e-dv2-mimg');     frames.forEach((frame) => {       const image = frame.querySelector('img');       if (!image) return;       const list = frame.closest<HTMLElement>('.e-dv2-list');       if (!list) return;       const gutter = parseFloat(getComputedStyle(list).paddingLeft);       gsap.fromTo(frame, { marginLeft: 0, marginRight: 0, marginTop: 0 }, {         marginLeft: -gutter,         marginRight: -gutter,         marginTop: -gutter,         borderRadius: 0,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });       gsap.fromTo(image, { scale: 1.08 }, {         scale: 1,         ease: 'none',         scrollTrigger: { trigger: frame, start: 'top 88%', end: 'top 50%', scrub: true },       });     });     return () => frames.forEach((frame) => {       gsap.set(frame, { clearProps: 'marginLeft,marginRight,marginTop,borderRadius' });       gsap.set(frame.querySelector('img'), { clearProps: 'transform' });     });   });
+  // HP: tinggi tiap kartu layanan disimpan di --h untuk aturan sticky "kartu menumpuk" (lihat CSS .e-dv2-item).
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver((entries) => entries.forEach((e) => (e.target as HTMLElement).style.setProperty('--h', `${(e.target as HTMLElement).offsetHeight}px`)));
+    items.forEach((it) => ro.observe(it));
+  }
   const activate = (i: number) => {
     items.forEach((it, k) => it.classList.toggle('is-on', k === i));
     imgs.forEach((im, k) => { im.classList.toggle('is-on', k === i); im.style.zIndex = k === i ? '1' : '0'; });
@@ -353,6 +358,21 @@ const packages = [
   .dv-rv-i blockquote { min-width: 0; margin: 0; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   :global(html.no-motion) .dv-rv-i { transition: none; }
   .e-dv2-media { display: none; }
+  /* HP: kartu layanan menumpuk saat scroll. Tiap kartu menempel di atas layar dan kartu berikutnya naik menutupinya;
+     tepi atas kartu sebelumnya tetap mengintip (--i). --h (tinggi kartu, diisi JS) menjaga kartu yang lebih tinggi
+     dari layar tetap terbaca sampai bawah sebelum menempel. Tanpa JS atau gerak mati: daftar biasa. */
+  @media (max-width: 767px) {
+    :global(html.js:not(.no-motion)) .e-dv2-item {
+      position: sticky;
+      top: min(calc(12px + var(--i, 0) * 10px), calc(100svh - var(--h, 100svh) - 12px));
+      margin-inline: calc(var(--gutter) * -1);
+      padding: var(--gutter) var(--gutter) 32px;
+      overflow: hidden;
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: var(--color-bg);
+      box-shadow: 0 -1px 0 var(--color-border), 0 -14px 32px rgb(0 0 0 / .08);
+    }
+  }
   @media (min-width: 1024px) {
     .e-dv2-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
     .e-dv2-list { padding-right: clamp(32px, 4vw, 72px); }
