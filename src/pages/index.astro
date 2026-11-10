@@ -316,12 +316,13 @@ const packages = [
   .e-word :global(div) { display: inline-block; }
 
   /* 2. Intro */
+  .e-intro { padding-top: clamp(140px, 17vw, 240px); padding-bottom: clamp(120px, 15vw, 220px); }
   .io2-t { font-size: var(--text-3xl); line-height: 1.2; letter-spacing: -0.035em; font-weight: 500; max-width: 32ch; margin: 0 auto; text-align: center; }
   .io-pic { display: inline-block; width: 2.4em; height: .82em; margin-inline: .06em; border-radius: 999px; overflow: hidden; vertical-align: -.08em; }
   .io-pic img { width: 100%; height: 100%; object-fit: cover; }
 
   /* 3. Works: foto selebar layar */
-  .e-wk { padding-bottom: 0; }
+  .e-wk { padding-top: 0; padding-bottom: 0; }
   .e-wk-list { display: grid; gap: 0; }
   .e-wk-item { position: relative; display: block; height: clamp(520px, 92svh, 1000px); overflow: hidden; color: #fff; }
   .e-wk-img { position: absolute; inset: 0; overflow: hidden; }
