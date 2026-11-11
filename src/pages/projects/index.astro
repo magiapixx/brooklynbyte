@@ -12,7 +12,7 @@ const filters = [['all', 'All'], ['branding', 'Branding'], ['web', 'Web'], ['pro
   </div></section>
   <section class="sec" data-mood="night" style="padding-top:0" data-preview="#pj-preview"><div class="wrap">
     <div class="plist" id="plist" data-stagger>
-      {projects.map((p, i) => <a class="prow" href={`/projects/${p.id}/`} data-cat={p.data.category} data-img={p.data.cover.src} data-cursor="View"><span class="n type-small muted">{String(i + 1).padStart(2, '0')}</span><span class="nm">{p.data.name}</span><span class="cat type-small muted">{p.data.categoryLabel}</span><span class="type-small muted" style="text-align:right">{p.data.year}</span></a>)}
+      {projects.map((p, i) => <a class="prow" href={`/projects/${p.id}/`} data-cat={p.data.category} data-img={p.data.cover.src} data-cursor="View"><span class="n type-small muted">{String(i + 1).padStart(2, '0')}</span><span class="project-copy"><span class="nm">{p.data.name}</span>{p.data.description && <span class="project-description type-small muted">{p.data.description}</span>}</span><span class="cat type-small muted">{p.data.categoryLabel}</span><span class="type-small muted" style="text-align:right">{p.data.year}</span></a>)}
     </div></div>
     <div class="preview" id="pj-preview" aria-hidden="true"><img src={projects[0].data.cover.src} alt="" /></div>
   </section>
