@@ -183,14 +183,14 @@ html.is-loading .loader{display:flex}
 .cursor.big{width:88px;height:88px;margin:-44px 0 0 -44px}.cursor.big span{opacity:1}
 @media (hover:none){.cursor{display:none}}
 
-/* WhatsApp mengambang */
-.wa{position:fixed;right:20px;bottom:20px;z-index:55;display:flex;align-items:center;gap:0;height:56px;min-width:56px;padding:0 16px;border-radius:999px;background:var(--orange);color:oklch(.99 0 0);font-weight:700;font-size:var(--text-sm);box-shadow:0 10px 30px oklch(0 0 0 / .35)}
-.wa svg{flex:none;width:24px;height:24px}
-.wa .lbl{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width var(--duration-base) var(--ease-brand),margin var(--duration-base) var(--ease-brand)}
-.wa:hover .lbl,.wa:focus-visible .lbl{max-width:200px;margin-left:10px}
-.wa::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--orange);animation:pulse 2.4s var(--ease-brand) infinite}
+/* Floating email contact */
+.email-contact{position:fixed;right:20px;bottom:20px;z-index:55;display:flex;align-items:center;gap:0;height:56px;min-width:56px;padding:0 16px;border-radius:999px;background:var(--orange);color:oklch(.99 0 0);font-weight:700;font-size:var(--text-sm);box-shadow:0 10px 30px oklch(0 0 0 / .35)}
+.email-contact svg{flex:none;width:24px;height:24px}
+.email-contact .lbl{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width var(--duration-base) var(--ease-brand),margin var(--duration-base) var(--ease-brand)}
+.email-contact:hover .lbl,.email-contact:focus-visible .lbl{max-width:200px;margin-left:10px}
+.email-contact::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--orange);animation:pulse 2.4s var(--ease-brand) infinite}
 @keyframes pulse{from{transform:scale(1);opacity:.8}to{transform:scale(1.5);opacity:0}}
-html.no-motion .wa::after{animation:none}
+html.no-motion .email-contact::after{animation:none}
 
 /* Section umum */
 .sec{padding-block:var(--section)}
@@ -366,10 +366,9 @@ main{position:relative;z-index:1;background:var(--color-bg);transition:backgroun
 .sec-head-title{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px}
 .prose{max-width:var(--container-measure)}
 .prose code{font-size:.9em}
-.wa svg{flex:none}
+.email-contact svg{flex:none}
 /* Scroll selalu di window (ScrollTrigger + Lenis memakai window); cegah wrapper luar menjadikan body scroll container */
 html{height:auto;overflow-y:auto}
 body{height:auto;overflow:visible}
 html.is-loading{overflow:hidden}
-
 

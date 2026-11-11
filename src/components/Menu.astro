@@ -14,8 +14,8 @@ const isActive = (href: string) => {
     <div class="menu-info">
       <p class="type-label muted">Brooklynbyte studio</p>
       <address class="type-lead" style="font-style:normal">{SITE.address[0]}<br />{SITE.address[1]}</address>
-      <p><a class="ulink type-lead" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-      <p><Button href={SITE.whatsapp} label="Chat on WhatsApp" whatsapp magnetic variant="solid" /></p>
+      <p><a class="ulink type-lead" href={SITE.emailHref}>{SITE.email}</a></p>
+      <p><Button href={SITE.emailHref} label="Contact us" magnetic variant="solid" /></p>
     </div>
     <nav class="menu-list" aria-label="Main">
       {SITE.nav.map((n, i) => {

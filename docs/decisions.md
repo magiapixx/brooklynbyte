@@ -29,3 +29,9 @@
 - Data contoh (paket, harga, review 04–06 dan review kedua tiap layanan) ditandai `[CONTOH]` dan harus diganti data asli.
 - Dependency dev baru: `@astrojs/check`, `typescript` (dibutuhkan `pnpm astro check`, aturan 8 AGENTS.md).
 - Owner memilih referensi Unsplash "Abstract, spiraling sculpture with blue and white tones" sebagai arah aset: semua slot gambar memakai gambar berbeda dengan bentuk 3D organik/berpilin biru-putih, bukan render kubus. Sumber lokal beresolusi sampai 2000 px dan tetap di bawah 200 KB per file; poster video mengikuti arah baru, video tetap tidak berubah.
+
+## 2026-11-11 · Persiapan deployment Vercel
+- Tambahkan `vercel.json` untuk build Astro statis di Vercel dengan pnpm, mengadaptasi header keamanan dan cache dari `public/_headers`. Tanpa adapter SSR atau dependency tambahan; deployment masih perlu dikonfigurasi owner di Vercel. | orchestrator
+
+## 2026-11-11 · Kontak utama melalui email
+- Ganti CTA dan tautan WhatsApp di seluruh situs dengan tautan email ke `hello@brooklynbyte.com`, sesuai permintaan owner. URL situs tetap `brooklynbyte.studio`. | owner / orchestrator

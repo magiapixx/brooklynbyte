@@ -159,7 +159,7 @@ const packages = [
             <ul class="e-pkg-list">{p.items.map((it) => <li>{it}</li>)}</ul>
             <footer>
               <p class="e-pkg-meta">{p.time} · from {p.from}</p>
-              <a class="e-pkg-go" href={SITE.whatsapp} aria-label={`Start with ${p.name}`}><span>Start with {p.name}</span><i aria-hidden="true">↗</i></a>
+              <a class="e-pkg-go" href={SITE.emailHref} aria-label={`Email about ${p.name}`}><span>Start with {p.name}</span><i aria-hidden="true">↗</i></a>
             </footer>
           </li>
         ))}

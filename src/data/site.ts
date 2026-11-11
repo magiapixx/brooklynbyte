@@ -1,13 +1,14 @@
 import type { ImageMetadata } from 'astro';
 import data from './site.json';
 
+const contactEmail = 'hello@brooklynbyte.com';
+
 export const SITE = {
   name: 'Brooklynbyte',
   url: 'https://brooklynbyte.studio',
-  email: 'hello@brooklynbyte.studio',
+  email: contactEmail,
+  emailHref: `mailto:${contactEmail}`,
   address: ['214 Wythe Ave', 'Brooklyn, NY 11249'],
-  // [PLACEHOLDER: nomor WhatsApp asli]
-  whatsapp: 'https://wa.me/6281200000000?text=' + encodeURIComponent("Hi Brooklynbyte, I'd like to talk about a project."),
   social: [
     { label: 'Instagram', href: '#' },
     { label: 'LinkedIn', href: '#' },
