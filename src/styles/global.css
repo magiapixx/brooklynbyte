@@ -319,9 +319,7 @@ main{position:relative;z-index:1;background:var(--color-bg);transition:backgroun
 .plist{border-top:1px solid var(--color-border)}
 .prow{display:grid;grid-template-columns:1fr auto;gap:6px 24px;align-items:center;padding:28px 4px;border-bottom:1px solid var(--color-border);transition:padding var(--duration-base) var(--ease-brand),color var(--duration-fast)}
 @media (min-width:768px){.prow{grid-template-columns:5rem 6fr 3fr 1fr}}
-.prow .project-copy{display:grid;gap:8px;min-width:0}
 .prow .nm{font-size:var(--text-3xl);font-weight:500;letter-spacing:var(--text-3xl--letter-spacing);line-height:var(--text-3xl--line-height)}
-.prow .project-description{max-width:60ch}
 .prow:hover{padding-left:20px;color:var(--orange)}
 .prow .n,.prow .cat{display:none}
 @media (min-width:768px){.prow .n,.prow .cat{display:block}}
