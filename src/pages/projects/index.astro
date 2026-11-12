@@ -1,8 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const filters = [['all', 'All'], ['branding', 'Branding'], ['web', 'Web'], ['product', 'Product'], ['campaign', 'Campaign']];
+
+const projectImages = await Promise.all(
+  projects.map(async (p) => {
+    const img = await getImage({ src: p.data.cover });
+    return img.src;
+  })
+);
 ---
 <BaseLayout title="Projects" description="Selected brands, websites and products by Brooklynbyte, 2023–2026.">
   <section class="page-head" data-mood="night"><div class="wrap">
@@ -12,8 +20,9 @@ const filters = [['all', 'All'], ['branding', 'Branding'], ['web', 'Web'], ['pro
   </div></section>
   <section class="sec" data-mood="night" style="padding-top:0" data-preview="#pj-preview"><div class="wrap">
     <div class="plist" id="plist" data-stagger>
-      {projects.map((p, i) => <a class="prow" href={`/projects/${p.id}/`} data-cat={p.data.category} data-img={p.data.cover.src} data-cursor="View"><span class="n type-small muted">{String(i + 1).padStart(2, '0')}</span><span class="nm">{p.data.name}</span><span class="cat type-small muted">{p.data.categoryLabel}</span><span class="type-small muted" style="text-align:right">{p.data.year}</span></a>)}
+      {projects.map((p, i) => <a class="prow" href={`/projects/${p.id}/`} data-cat={p.data.category} data-img={projectImages[i]} data-cursor="View"><span class="n type-small muted">{String(i + 1).padStart(2, '0')}</span><span class="nm">{p.data.name}</span><span class="cat type-small muted">{p.data.categoryLabel}</span><span class="type-small muted" style="text-align:right">{p.data.year}</span></a>)}
     </div></div>
-    <div class="preview" id="pj-preview" aria-hidden="true"><img src={projects[0].data.cover.src} alt="" /></div>
+    <div class="preview" id="pj-preview" aria-hidden="true"><img src={projectImages[0]} alt="" /></div>
   </section>
 </BaseLayout>
+
